@@ -147,7 +147,7 @@ execSync("bun run build", { stdio: "inherit" });
 
 // 7. Realizar git commit y tag
 console.log(`💾 Creando commit y tag de versión ${tagName}...`);
-execSync("git add package.json src/index.ts CHANGELOG.md dist/", { stdio: "inherit" });
+execSync("git add -f package.json src/index.ts CHANGELOG.md dist/", { stdio: "inherit" });
 const commitMsg = `chore(release): publicar version ${tagName}`;
 execSync(`git commit -m "${commitMsg}"`, { stdio: "inherit" });
 execSync(`git tag -a ${tagName} -m "Release ${tagName}"`, { stdio: "inherit" });

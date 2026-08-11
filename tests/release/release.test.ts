@@ -23,7 +23,7 @@ describe("release script & package.json scripts", () => {
     expect(scriptContent).toContain('releaseType === "major"');
     expect(scriptContent).toContain('releaseType === "minor"');
     expect(scriptContent).toContain('releaseType === "patch"');
-    expect(scriptContent).toContain("git tag -a");
+    expect(scriptContent).toContain("git add -f");
     expect(scriptContent).toContain("CHANGELOG.md");
   });
 
