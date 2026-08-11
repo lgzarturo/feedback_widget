@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-003",
+  "activeItemId": "BC-004",
   "taskCards": [
     {
-      "id": "BC-003-discover",
-      "backlogId": "BC-003",
+      "id": "BC-004-discover",
+      "backlogId": "BC-004",
       "phase": "discover",
-      "title": "BC-003: Discover scope and impact",
-      "prompt": "Backlog item BC-003 — Contrato de configuracion data-feedback\n\nDescription: Definir el contrato de configuracion del widget mediante atributos data-feedback en el elemento host, con parser tipado y valores por defecto documentados.\nScope: src/config/types.ts, src/config/parse.ts, tests/config/parse.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-004: Discover scope and impact",
+      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-003-design",
-      "backlogId": "BC-003",
+      "id": "BC-004-design",
+      "backlogId": "BC-004",
       "phase": "design",
-      "title": "BC-003: Technical design",
-      "prompt": "Backlog item BC-003 — Contrato de configuracion data-feedback\n\nDescription: Definir el contrato de configuracion del widget mediante atributos data-feedback en el elemento host, con parser tipado y valores por defecto documentados.\nScope: src/config/types.ts, src/config/parse.ts, tests/config/parse.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-004: Technical design",
+      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-003-discover"
+        "BC-004-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,55 +33,53 @@
       "status": "pending"
     },
     {
-      "id": "BC-003-test",
-      "backlogId": "BC-003",
+      "id": "BC-004-test",
+      "backlogId": "BC-004",
       "phase": "test",
-      "title": "BC-003: Test coverage",
-      "prompt": "Backlog item BC-003 — Contrato de configuracion data-feedback\n\nDescription: Definir el contrato de configuracion del widget mediante atributos data-feedback en el elemento host, con parser tipado y valores por defecto documentados.\nScope: src/config/types.ts, src/config/parse.ts, tests/config/parse.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-004: Test coverage",
+      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-003-design"
+        "BC-004-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: Parser lee data-api-key, data-base-url, data-source, data-position, data-primary-color, data-accent-color, data-locale, data-animation y data-z-index",
-        "Test covers: data-base-url por defecto es https://api.appsutiles.dev cuando no se especifica",
-        "Test covers: data-position acepta bottom-left, bottom-right, top-left, top-right y alias left-bottom y right-bottom",
-        "Test covers: Valores invalidos de color o posicion usan defaults documentados sin lanzar excepcion",
-        "Test covers: Tests cubren configuracion minima, completa y valores invalidos"
+        "Test covers: El widget se inicializa automaticamente al detectar un elemento [data-feedback] tras DOMContentLoaded",
+        "Test covers: La inicializacion es idempotente: un segundo intento sobre el mismo elemento no crea instancias duplicadas",
+        "Test covers: El script exporta una funcion initFeedbackWidget opcional para inicializacion manual",
+        "Test covers: Tests verifican auto-init y prevencion de doble instancia con DOM simulado"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-003-implement",
-      "backlogId": "BC-003",
+      "id": "BC-004-implement",
+      "backlogId": "BC-004",
       "phase": "implement",
-      "title": "BC-003: Implementation",
-      "prompt": "Backlog item BC-003 — Contrato de configuracion data-feedback\n\nDescription: Definir el contrato de configuracion del widget mediante atributos data-feedback en el elemento host, con parser tipado y valores por defecto documentados.\nScope: src/config/types.ts, src/config/parse.ts, tests/config/parse.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-004: Implementation",
+      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-003-test"
+        "BC-004-test"
       ],
       "acceptanceCriteria": [
-        "Parser lee data-api-key, data-base-url, data-source, data-position, data-primary-color, data-accent-color, data-locale, data-animation y data-z-index",
-        "data-base-url por defecto es https://api.appsutiles.dev cuando no se especifica",
-        "data-position acepta bottom-left, bottom-right, top-left, top-right y alias left-bottom y right-bottom",
-        "Valores invalidos de color o posicion usan defaults documentados sin lanzar excepcion",
-        "Tests cubren configuracion minima, completa y valores invalidos"
+        "El widget se inicializa automaticamente al detectar un elemento [data-feedback] tras DOMContentLoaded",
+        "La inicializacion es idempotente: un segundo intento sobre el mismo elemento no crea instancias duplicadas",
+        "El script exporta una funcion initFeedbackWidget opcional para inicializacion manual",
+        "Tests verifican auto-init y prevencion de doble instancia con DOM simulado"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-003-review",
-      "backlogId": "BC-003",
+      "id": "BC-004-review",
+      "backlogId": "BC-004",
       "phase": "review",
-      "title": "BC-003: Review and validation",
-      "prompt": "Backlog item BC-003 — Contrato de configuracion data-feedback\n\nDescription: Definir el contrato de configuracion del widget mediante atributos data-feedback en el elemento host, con parser tipado y valores por defecto documentados.\nScope: src/config/types.ts, src/config/parse.ts, tests/config/parse.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-004: Review and validation",
+      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-003-implement"
+        "BC-004-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -94,7 +92,8 @@
   "changePaths": {
     "BC-001": "openspec/changes/bc-001-scaffolding-bun-typescript-strict",
     "BC-002": "openspec/changes/bc-002-toolchain-de-calidad-biome-bun-test-ci-y-openspe",
-    "BC-003": "openspec/changes/bc-003-contrato-de-configuracion-data-feedback"
+    "BC-003": "openspec/changes/bc-003-contrato-de-configuracion-data-feedback",
+    "BC-004": "openspec/changes/bc-004-bootstrap-del-widget-y-carga-diferida"
   },
   "itemSnapshots": {}
 }

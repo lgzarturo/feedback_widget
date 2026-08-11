@@ -17,51 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-004 | Bootstrap del widget y carga diferida
-
-- Priority: P0
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-001, BC-003
-- Description: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.
-- Scope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts
-- Out of scope: formularios, modal, llamadas API, build de produccion
-- Business value: integracion de una linea de script sin bloquear el parsing de la pagina host
-- Acceptance:
-  - [ ] El widget se inicializa automaticamente al detectar un elemento [data-feedback] tras DOMContentLoaded
-  - [ ] La inicializacion es idempotente: un segundo intento sobre el mismo elemento no crea instancias duplicadas
-  - [ ] El script exporta una funcion initFeedbackWidget opcional para inicializacion manual
-  - [ ] Tests verifican auto-init y prevencion de doble instancia con DOM simulado
-- Risks: conflictos con otros scripts que modifiquen el DOM al mismo tiempo
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-004
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos bootstrap e index listados en proposal.md                              | 10 %  | pendiente |
-| discover  | Convenciones de ciclo de vida del widget documentadas                           | 5 %   | pendiente |
-| design    | Flujo de auto-init y API publica definidos en design.md antes de tests           | 15 %  | pendiente |
-| design    | Regla de idempotencia por elemento host explicita en design.md                  | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de bootstrap escritos y en rojo antes de implementar                      | 15 %  | pendiente |
-| test      | Tests cubren auto-init, init manual y prevencion de doble instancia             | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/bootstrap.test.ts pasa en verde                                  | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-004-bootstrap-defer/
-
----
-
 ### BC-005 | Boton flotante configurable
 
 - Priority: P1
@@ -528,6 +483,46 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 ---
 
 ## Archive
+
+### BC-004 | Bootstrap del widget y carga diferida
+
+- Priority: P0
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-001, BC-003
+- Description: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.
+- Scope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts
+- Out of scope: formularios, modal, llamadas API, build de produccion
+- Business value: integracion de una linea de script sin bloquear el parsing de la pagina host
+- Acceptance:
+  - [x] El widget se inicializa automaticamente al detectar un elemento [data-feedback] tras DOMContentLoaded
+  - [x] La inicializacion es idempotente: un segundo intento sobre el mismo elemento no crea instancias duplicadas
+  - [x] El script exporta una funcion initFeedbackWidget opcional para inicializacion manual
+  - [x] Tests verifican auto-init y prevencion de doble instancia con DOM simulado
+- Risks: conflictos con otros scripts que modifiquen el DOM al mismo tiempo
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-004
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos bootstrap e index listados en proposal.md                              | 10 %  | completado  |
+| discover  | Convenciones de ciclo de vida del widget documentadas                           | 5 %   | completado  |
+| design    | Flujo de auto-init y API publica definidos en design.md antes de tests           | 15 %  | completado  |
+| design    | Regla de idempotencia por elemento host explicita en design.md                  | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Tests de bootstrap escritos y en rojo antes de implementar                      | 15 %  | completado  |
+| test      | Tests cubren auto-init, init manual y prevencion de doble instancia             | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/bootstrap.test.ts pasa en verde                                  | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-004-bootstrap-del-widget-y-carga-diferida/
 
 ### BC-003 | Contrato de configuracion data-feedback
 

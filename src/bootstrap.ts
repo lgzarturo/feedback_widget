@@ -1,0 +1,47 @@
+import { parseFeedbackConfig } from "./config/parse";
+import type { WidgetConfig } from "./config/types";
+
+const INITIALIZED_ATTR = "data-feedback-initialized";
+
+export interface FeedbackWidgetInstance {
+  host: HTMLElement;
+  config: WidgetConfig;
+}
+
+const instances = new WeakMap<HTMLElement, FeedbackWidgetInstance>();
+
+function createInstance(host: HTMLElement): FeedbackWidgetInstance {
+  const config = parseFeedbackConfig(host);
+  const instance: FeedbackWidgetInstance = { host, config };
+  instances.set(host, instance);
+  host.setAttribute(INITIALIZED_ATTR, "");
+  return instance;
+}
+
+export function initFeedbackWidget(host: HTMLElement): FeedbackWidgetInstance {
+  const existing = instances.get(host);
+  if (existing) {
+    return existing;
+  }
+
+  return createInstance(host);
+}
+
+function initializeAllHosts(): void {
+  const hosts = document.querySelectorAll(`[data-feedback]:not([${INITIALIZED_ATTR}])`);
+
+  for (const element of hosts) {
+    if (element instanceof HTMLElement) {
+      initFeedbackWidget(element);
+    }
+  }
+}
+
+export function bootstrapFeedbackWidget(): void {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeAllHosts);
+    return;
+  }
+
+  initializeAllHosts();
+}

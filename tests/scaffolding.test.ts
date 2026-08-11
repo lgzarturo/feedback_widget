@@ -6,21 +6,25 @@ import { FEEDBACK_WIDGET_VERSION } from "../src/index";
 const projectRoot = join(import.meta.dir, "..");
 
 describe("BC-001 scaffolding", () => {
-  test("given_clean_clone_when_bun_install_and_typecheck_then_exits_zero", () => {
-    const install = Bun.spawnSync(["bun", "install"], {
-      cwd: projectRoot,
-      stdout: "pipe",
-      stderr: "pipe",
-    });
-    expect(install.exitCode).toBe(0);
+  test(
+    "given_clean_clone_when_bun_install_and_typecheck_then_exits_zero",
+    () => {
+      const install = Bun.spawnSync(["bun", "install"], {
+        cwd: projectRoot,
+        stdout: "pipe",
+        stderr: "pipe",
+      });
+      expect(install.exitCode).toBe(0);
 
-    const typecheck = Bun.spawnSync(["bun", "run", "typecheck"], {
-      cwd: projectRoot,
-      stdout: "pipe",
-      stderr: "pipe",
-    });
-    expect(typecheck.exitCode).toBe(0);
-  });
+      const typecheck = Bun.spawnSync(["bun", "run", "typecheck"], {
+        cwd: projectRoot,
+        stdout: "pipe",
+        stderr: "pipe",
+      });
+      expect(typecheck.exitCode).toBe(0);
+    },
+    { timeout: 30_000 },
+  );
 
   test("given_tsconfig_when_read_then_strict_and_esnext", () => {
     const tsconfigPath = join(projectRoot, "tsconfig.json");

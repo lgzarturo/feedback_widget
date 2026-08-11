@@ -1,2 +1,9 @@
-/** Entry point del widget CDN. Implementación en BC-004+. */
+import { bootstrapFeedbackWidget, initFeedbackWidget } from "./bootstrap";
+
+export type { FeedbackWidgetInstance } from "./bootstrap";
+export { bootstrapFeedbackWidget, initFeedbackWidget };
+
+/** Entry point del widget CDN. */
 export const FEEDBACK_WIDGET_VERSION = "0.0.0";
+
+bootstrapFeedbackWidget();
