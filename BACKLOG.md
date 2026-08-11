@@ -17,55 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-010 | Cliente API api.appsutiles.dev
-
-- Priority: P1
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-003, BC-007, BC-008
-- Description: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.
-- Scope: src/api/contact-client.ts, tests/api/contact-client.test.ts
-- Out of scope: panel admin de mensajes, rate limiting del lado cliente, almacenamiento local de borradores
-- Business value: entrega confiable de feedback y contacto al backend centralizado de AppsUtiles
-- Acceptance:
-  - [ ] POST a {baseUrl}/v1/contact/messages con Content-Type application/json y header x-api-key
-  - [ ] El body incluye name, email, message, locale, source, submittedAt en ISO8601 y metadata
-  - [ ] metadata de feedback incluye rating, ratingEmoji, formType feedback y comentario opcional
-  - [ ] metadata de contacto incluye formType contact
-  - [ ] Respuesta 401 muestra mensaje de error de API key invalida al usuario
-  - [ ] Respuesta 400 muestra mensaje de error de validacion al usuario
-  - [ ] Respuesta 5xx muestra mensaje generico de reintento al usuario
-  - [ ] Tests con fetch mockeado cubren exito, 401, 400 y 5xx
-- Risks: exposicion de API key en atributo HTML del sitio host; documentar buenas practicas
-- Progress: 0%
-- Reviewer: security-reviewer, reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-010
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos del cliente API listados en proposal.md                                | 10 %  | pendiente |
-| discover  | Convenciones de manejo de errores HTTP documentadas                              | 5 %   | pendiente |
-| design    | Contrato de request y response definido en design.md antes de tests             | 15 %  | pendiente |
-| design    | Mapeo metadata feedback y contacto explicito en design.md                       | 10 %  | pendiente |
-| design    | design.md aprobado por revisor y security-reviewer antes de fase test           | 5 %   | pendiente |
-| test      | Tests de contact-client escritos y en rojo antes de implementar                 | 15 %  | pendiente |
-| test      | Tests cubren exito 201, 401, 400 y 5xx con fetch mockeado                       | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/api/contact-client.test.ts pasa en verde                         | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report y security-reviewer                     | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-010-api-contact-client/
-
----
-
 ### BC-011 | Build bundle unico feedback.min.js
 
 - Priority: P0
@@ -251,8 +202,56 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 
 ---
 
-
 ## Archive
+
+### BC-010 | Cliente API api.appsutiles.dev
+
+- Priority: P1
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-003, BC-007, BC-008
+- Description: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.
+- Scope: src/api/contact-client.ts, tests/api/contact-client.test.ts
+- Out of scope: panel admin de mensajes, rate limiting del lado cliente, almacenamiento local de borradores
+- Business value: entrega confiable de feedback y contacto al backend centralizado de AppsUtiles
+- Acceptance:
+  - [x] POST a {baseUrl}/v1/contact/messages con Content-Type application/json y header x-api-key
+  - [x] El body incluye name, email, message, locale, source, submittedAt en ISO8601 y metadata
+  - [x] metadata de feedback incluye rating, ratingEmoji, formType feedback y comentario opcional
+  - [x] metadata de contacto incluye formType contact
+  - [x] Respuesta 401 muestra mensaje de error de API key invalida al usuario
+  - [x] Respuesta 400 muestra mensaje de error de validacion al usuario
+  - [x] Respuesta 5xx muestra mensaje generico de reintento al usuario
+  - [x] Tests con fetch mockeado cubren exito, 401, 400 y 5xx
+- Risks: exposicion de API key en atributo HTML del sitio host; documentar buenas practicas
+- Progress: 100%
+- Reviewer: security-reviewer, reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-010
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos del cliente API listados en proposal.md                                | 10 %  | completado  |
+| discover  | Convenciones de manejo de errores HTTP documentadas                              | 5 %   | completado  |
+| design    | Contrato de request y response definido en design.md antes de tests             | 15 %  | completado  |
+| design    | Mapeo metadata feedback y contacto explicito en design.md                       | 10 %  | completado  |
+| design    | design.md aprobado por revisor y security-reviewer antes de fase test           | 5 %   | completado  |
+| test      | Tests de contact-client escritos y en rojo antes de implementar                 | 15 %  | completado  |
+| test      | Tests cubren exito 201, 401, 400 y 5xx con fetch mockeado                       | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/api/contact-client.test.ts pasa en verde                         | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report y security-reviewer                     | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-010-api-contact-client/
+
+---
 
 ### BC-009 | Microanimaciones Three.js
 

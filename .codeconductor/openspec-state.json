@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-009",
+  "activeItemId": "BC-010",
   "taskCards": [
     {
-      "id": "BC-009-discover",
-      "backlogId": "BC-009",
+      "id": "BC-010-discover",
+      "backlogId": "BC-010",
       "phase": "discover",
-      "title": "BC-009: Discover scope and impact",
-      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-010: Discover scope and impact",
+      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-009-design",
-      "backlogId": "BC-009",
+      "id": "BC-010-design",
+      "backlogId": "BC-010",
       "phase": "design",
-      "title": "BC-009: Technical design",
-      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-010: Technical design",
+      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-009-discover"
+        "BC-010-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,57 +33,61 @@
       "status": "pending"
     },
     {
-      "id": "BC-009-test",
-      "backlogId": "BC-009",
+      "id": "BC-010-test",
+      "backlogId": "BC-010",
       "phase": "test",
-      "title": "BC-009: Test coverage",
-      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-010: Test coverage",
+      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-009-design"
+        "BC-010-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: Al abrir el modal se reproduce una animacion de entrada cuando data-animation es on",
-        "Test covers: Al cerrar el modal se reproduce una animacion de salida cuando data-animation es on",
-        "Test covers: Los errores de validacion de formulario muestran un efecto visual breve en el campo afectado",
-        "Test covers: Si WebGL no esta disponible el widget funciona sin animaciones y sin errores en consola",
-        "Test covers: data-animation off desactiva todas las animaciones Three.js",
-        "Test covers: Tests verifican activacion, desactivacion y fallback sin WebGL"
+        "Test covers: POST a {baseUrl}/v1/contact/messages con Content-Type application/json y header x-api-key",
+        "Test covers: El body incluye name, email, message, locale, source, submittedAt en ISO8601 y metadata",
+        "Test covers: metadata de feedback incluye rating, ratingEmoji, formType feedback y comentario opcional",
+        "Test covers: metadata de contacto incluye formType contact",
+        "Test covers: Respuesta 401 muestra mensaje de error de API key invalida al usuario",
+        "Test covers: Respuesta 400 muestra mensaje de error de validacion al usuario",
+        "Test covers: Respuesta 5xx muestra mensaje generico de reintento al usuario",
+        "Test covers: Tests con fetch mockeado cubren exito, 401, 400 y 5xx"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-009-implement",
-      "backlogId": "BC-009",
+      "id": "BC-010-implement",
+      "backlogId": "BC-010",
       "phase": "implement",
-      "title": "BC-009: Implementation",
-      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-010: Implementation",
+      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-009-test"
+        "BC-010-test"
       ],
       "acceptanceCriteria": [
-        "Al abrir el modal se reproduce una animacion de entrada cuando data-animation es on",
-        "Al cerrar el modal se reproduce una animacion de salida cuando data-animation es on",
-        "Los errores de validacion de formulario muestran un efecto visual breve en el campo afectado",
-        "Si WebGL no esta disponible el widget funciona sin animaciones y sin errores en consola",
-        "data-animation off desactiva todas las animaciones Three.js",
-        "Tests verifican activacion, desactivacion y fallback sin WebGL"
+        "POST a {baseUrl}/v1/contact/messages con Content-Type application/json y header x-api-key",
+        "El body incluye name, email, message, locale, source, submittedAt en ISO8601 y metadata",
+        "metadata de feedback incluye rating, ratingEmoji, formType feedback y comentario opcional",
+        "metadata de contacto incluye formType contact",
+        "Respuesta 401 muestra mensaje de error de API key invalida al usuario",
+        "Respuesta 400 muestra mensaje de error de validacion al usuario",
+        "Respuesta 5xx muestra mensaje generico de reintento al usuario",
+        "Tests con fetch mockeado cubren exito, 401, 400 y 5xx"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-009-review",
-      "backlogId": "BC-009",
+      "id": "BC-010-review",
+      "backlogId": "BC-010",
       "phase": "review",
-      "title": "BC-009: Review and validation",
-      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-010: Review and validation",
+      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-009-implement"
+        "BC-010-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -102,7 +106,8 @@
     "BC-006": "openspec/changes/bc-006-modal-con-tabs-feedback-y-contacto",
     "BC-007": "openspec/changes/bc-007-formulario-de-feedback-con-emojis",
     "BC-008": "openspec/changes/bc-008-formulario-de-contacto-y-envio-solo-contacto",
-    "BC-009": "openspec/changes/bc-009-microanimaciones-three-js"
+    "BC-009": "openspec/changes/bc-009-microanimaciones-three-js",
+    "BC-010": "openspec/changes/bc-010-cliente-api-api-appsutiles-dev"
   },
   "itemSnapshots": {}
 }
