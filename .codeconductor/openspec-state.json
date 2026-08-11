@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-008",
+  "activeItemId": "BC-009",
   "taskCards": [
     {
-      "id": "BC-008-discover",
-      "backlogId": "BC-008",
+      "id": "BC-009-discover",
+      "backlogId": "BC-009",
       "phase": "discover",
-      "title": "BC-008: Discover scope and impact",
-      "prompt": "Backlog item BC-008 — Formulario de contacto y envio solo-contacto\n\nDescription: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.\nScope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-009: Discover scope and impact",
+      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-008-design",
-      "backlogId": "BC-008",
+      "id": "BC-009-design",
+      "backlogId": "BC-009",
       "phase": "design",
-      "title": "BC-008: Technical design",
-      "prompt": "Backlog item BC-008 — Formulario de contacto y envio solo-contacto\n\nDescription: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.\nScope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-009: Technical design",
+      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-008-discover"
+        "BC-009-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,55 +33,57 @@
       "status": "pending"
     },
     {
-      "id": "BC-008-test",
-      "backlogId": "BC-008",
+      "id": "BC-009-test",
+      "backlogId": "BC-009",
       "phase": "test",
-      "title": "BC-008: Test coverage",
-      "prompt": "Backlog item BC-008 — Formulario de contacto y envio solo-contacto\n\nDescription: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.\nScope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-009: Test coverage",
+      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-008-design"
+        "BC-009-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: El formulario muestra campos name, email y message con labels accesibles",
-        "Test covers: Validacion inline rechaza email invalido y campos vacios antes del envio",
-        "Test covers: El usuario puede enviar contacto desde el tab Contacto sin interactuar con el tab Feedback",
-        "Test covers: El payload preparado incluye metadata con formType contact",
-        "Test covers: Tests verifican validacion de email, campos requeridos y payload de contacto"
+        "Test covers: Al abrir el modal se reproduce una animacion de entrada cuando data-animation es on",
+        "Test covers: Al cerrar el modal se reproduce una animacion de salida cuando data-animation es on",
+        "Test covers: Los errores de validacion de formulario muestran un efecto visual breve en el campo afectado",
+        "Test covers: Si WebGL no esta disponible el widget funciona sin animaciones y sin errores en consola",
+        "Test covers: data-animation off desactiva todas las animaciones Three.js",
+        "Test covers: Tests verifican activacion, desactivacion y fallback sin WebGL"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-008-implement",
-      "backlogId": "BC-008",
+      "id": "BC-009-implement",
+      "backlogId": "BC-009",
       "phase": "implement",
-      "title": "BC-008: Implementation",
-      "prompt": "Backlog item BC-008 — Formulario de contacto y envio solo-contacto\n\nDescription: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.\nScope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-009: Implementation",
+      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-008-test"
+        "BC-009-test"
       ],
       "acceptanceCriteria": [
-        "El formulario muestra campos name, email y message con labels accesibles",
-        "Validacion inline rechaza email invalido y campos vacios antes del envio",
-        "El usuario puede enviar contacto desde el tab Contacto sin interactuar con el tab Feedback",
-        "El payload preparado incluye metadata con formType contact",
-        "Tests verifican validacion de email, campos requeridos y payload de contacto"
+        "Al abrir el modal se reproduce una animacion de entrada cuando data-animation es on",
+        "Al cerrar el modal se reproduce una animacion de salida cuando data-animation es on",
+        "Los errores de validacion de formulario muestran un efecto visual breve en el campo afectado",
+        "Si WebGL no esta disponible el widget funciona sin animaciones y sin errores en consola",
+        "data-animation off desactiva todas las animaciones Three.js",
+        "Tests verifican activacion, desactivacion y fallback sin WebGL"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-008-review",
-      "backlogId": "BC-008",
+      "id": "BC-009-review",
+      "backlogId": "BC-009",
       "phase": "review",
-      "title": "BC-008: Review and validation",
-      "prompt": "Backlog item BC-008 — Formulario de contacto y envio solo-contacto\n\nDescription: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.\nScope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-009: Review and validation",
+      "prompt": "Backlog item BC-009 — Microanimaciones Three.js\n\nDescription: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.\nScope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-008-implement"
+        "BC-009-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -99,7 +101,8 @@
     "BC-005": "openspec/changes/bc-005-boton-flotante-configurable",
     "BC-006": "openspec/changes/bc-006-modal-con-tabs-feedback-y-contacto",
     "BC-007": "openspec/changes/bc-007-formulario-de-feedback-con-emojis",
-    "BC-008": "openspec/changes/bc-008-formulario-de-contacto-y-envio-solo-contacto"
+    "BC-008": "openspec/changes/bc-008-formulario-de-contacto-y-envio-solo-contacto",
+    "BC-009": "openspec/changes/bc-009-microanimaciones-three-js"
   },
   "itemSnapshots": {}
 }

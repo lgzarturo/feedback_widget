@@ -1,3 +1,4 @@
+import { playValidationErrorFx } from "../animations/validation-fx";
 import type { WidgetConfig } from "../config/types";
 
 export interface ContactFormPayload {
@@ -232,6 +233,7 @@ export function createContactForm(
       error.textContent = message;
       error.hidden = false;
       input.classList.add("fw-field-input--error");
+      playValidationErrorFx(config, input);
       return;
     }
 

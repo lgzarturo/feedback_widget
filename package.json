@@ -16,8 +16,12 @@
     "@biomejs/biome": "^1.9.4",
     "@happy-dom/global-registrator": "^20.11.1",
     "@types/bun": "latest",
+    "@types/three": "^0.185.4",
     "happy-dom": "^20.11.1",
     "typescript": "^5.7.3"
   },
-  "trustedDependencies": ["@biomejs/biome"]
+  "trustedDependencies": ["@biomejs/biome"],
+  "dependencies": {
+    "three": "^0.185.1"
+  }
 }

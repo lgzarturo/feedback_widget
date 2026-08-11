@@ -1,3 +1,4 @@
+import { createModalAnimationController } from "../animations/modal-scene";
 import type { WidgetConfig } from "../config/types";
 import { type TabItem, createTabs } from "./tabs";
 
@@ -150,6 +151,7 @@ export function createFeedbackModal(config: WidgetConfig): FeedbackModal {
 
   let isOpen = false;
   let previousFocus: Element | null = null;
+  const animationController = createModalAnimationController(config, dialog);
 
   function open(): void {
     if (isOpen) {
@@ -160,10 +162,12 @@ export function createFeedbackModal(config: WidgetConfig): FeedbackModal {
     overlay.hidden = false;
     host.style.pointerEvents = "auto";
 
-    const firstTab = tabs.tablist.querySelector('[role="tab"][tabindex="0"]');
-    if (firstTab instanceof HTMLElement) {
-      firstTab.focus();
-    }
+    void animationController.playOpen().then(() => {
+      const firstTab = tabs.tablist.querySelector('[role="tab"][tabindex="0"]');
+      if (firstTab instanceof HTMLElement) {
+        firstTab.focus();
+      }
+    });
   }
 
   function close(): void {
@@ -171,14 +175,17 @@ export function createFeedbackModal(config: WidgetConfig): FeedbackModal {
       return;
     }
     isOpen = false;
-    overlay.hidden = true;
-    host.style.pointerEvents = "none";
-    tabs.setActiveTab("feedback");
 
-    if (previousFocus instanceof HTMLElement) {
-      previousFocus.focus();
-    }
-    previousFocus = null;
+    void animationController.playClose().then(() => {
+      overlay.hidden = true;
+      host.style.pointerEvents = "none";
+      tabs.setActiveTab("feedback");
+
+      if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
+      previousFocus = null;
+    });
   }
 
   function handleFocusTrap(event: KeyboardEvent): void {

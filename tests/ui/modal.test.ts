@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
+import { MODAL_CLOSE_MS } from "../../src/animations/modal-scene";
 import { DEFAULT_WIDGET_CONFIG } from "../../src/config/parse";
 import type { WidgetConfig } from "../../src/config/types";
 import { createFeedbackModal } from "../../src/ui/modal";
@@ -44,6 +45,12 @@ function getDialog(modalHost: HTMLElement): HTMLElement {
   return dialog;
 }
 
+function waitForModalAnimation(): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, MODAL_CLOSE_MS + 50);
+  });
+}
+
 function getFocusableElements(modalHost: HTMLElement): HTMLElement[] {
   const dialog = getDialog(modalHost);
   const selector = "button, [href], input, select, textarea, [tabindex]";
@@ -72,7 +79,7 @@ describe("BC-006 createFeedbackModal", () => {
     expect(getDialog(modal.host).getAttribute("aria-modal")).toBe("true");
   });
 
-  test("given_modal_open_when_close_clicked_then_modal_closes", () => {
+  test("given_modal_open_when_close_clicked_then_modal_closes", async () => {
     const modal = createFeedbackModal(configWith());
     document.body.appendChild(modal.host);
     modal.open();
@@ -80,10 +87,11 @@ describe("BC-006 createFeedbackModal", () => {
     getCloseButton(modal.host).click();
 
     expect(modal.isOpen()).toBe(false);
+    await waitForModalAnimation();
     expect(getModalOverlay(modal.host).hidden).toBe(true);
   });
 
-  test("given_modal_open_when_escape_pressed_then_modal_closes", () => {
+  test("given_modal_open_when_escape_pressed_then_modal_closes", async () => {
     const modal = createFeedbackModal(configWith());
     document.body.appendChild(modal.host);
     modal.open();
@@ -93,6 +101,8 @@ describe("BC-006 createFeedbackModal", () => {
     );
 
     expect(modal.isOpen()).toBe(false);
+    await waitForModalAnimation();
+    expect(getModalOverlay(modal.host).hidden).toBe(true);
   });
 
   test("given_trigger_wired_to_modal_when_button_clicked_then_modal_opens", () => {
@@ -124,7 +134,7 @@ describe("BC-006 createFeedbackModal", () => {
     expect(modal.host.shadowRoot?.activeElement).toBe(first);
   });
 
-  test("given_modal_closed_after_open_when_reopened_then_restores_default_tab", () => {
+  test("given_modal_closed_after_open_when_reopened_then_restores_default_tab", async () => {
     const modal = createFeedbackModal(configWith());
     document.body.appendChild(modal.host);
 
@@ -137,6 +147,7 @@ describe("BC-006 createFeedbackModal", () => {
     }
 
     modal.close();
+    await waitForModalAnimation();
     modal.open();
 
     const activeTab = modal.host.shadowRoot?.querySelector('[role="tab"][aria-selected="true"]');

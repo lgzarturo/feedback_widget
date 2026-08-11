@@ -1,3 +1,4 @@
+import { playValidationErrorFx } from "../animations/validation-fx";
 import type { WidgetConfig } from "../config/types";
 
 export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
@@ -218,6 +219,7 @@ export function createFeedbackForm(
     const payload = buildPayload();
     if (!payload) {
       validationError.hidden = false;
+      playValidationErrorFx(config, radiogroup);
       return false;
     }
     onSubmit?.(payload);

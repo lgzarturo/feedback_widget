@@ -17,53 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-009 | Microanimaciones Three.js
-
-- Priority: P2
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-006
-- Description: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.
-- Scope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts
-- Out of scope: animaciones complejas 3D, particulas personalizadas, dependencias runtime externas en CDN
-- Business value: experiencia visual distintiva sin sacrificar la carga ligera del widget
-- Acceptance:
-  - [ ] Al abrir el modal se reproduce una animacion de entrada cuando data-animation es on
-  - [ ] Al cerrar el modal se reproduce una animacion de salida cuando data-animation es on
-  - [ ] Los errores de validacion de formulario muestran un efecto visual breve en el campo afectado
-  - [ ] Si WebGL no esta disponible el widget funciona sin animaciones y sin errores en consola
-  - [ ] data-animation off desactiva todas las animaciones Three.js
-  - [ ] Tests verifican activacion, desactivacion y fallback sin WebGL
-- Risks: incremento del tamano del bundle; mitigar con tree-shaking en BC-011
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-009
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos de animaciones listados en proposal.md                                 | 10 %  | pendiente |
-| discover  | Convenciones de integracion Three.js documentadas                               | 5 %   | pendiente |
-| design    | Escenas de animacion y fallback sin WebGL definidos en design.md antes de tests | 15 %  | pendiente |
-| design    | Regla data-animation on/off explicita en design.md                            | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de animaciones escritos y en rojo antes de implementar                    | 15 %  | pendiente |
-| test      | Tests cubren activacion, desactivacion y degradacion sin WebGL                  | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/animations/modal-scene.test.ts pasa en verde                   | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-009-threejs-animations/
-
----
-
 ### BC-010 | Cliente API api.appsutiles.dev
 
 - Priority: P1
@@ -298,7 +251,55 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 
 ---
 
+
 ## Archive
+
+### BC-009 | Microanimaciones Three.js
+
+- Priority: P2
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-006
+- Description: Integrar Three.js para microanimaciones de apertura y cierre del modal y efectos visuales en estados de validacion de formularios, con degradacion graceful si WebGL no esta disponible.
+- Scope: src/animations/modal-scene.ts, src/animations/validation-fx.ts, tests/animations/modal-scene.test.ts
+- Out of scope: animaciones complejas 3D, particulas personalizadas, dependencias runtime externas en CDN
+- Business value: experiencia visual distintiva sin sacrificar la carga ligera del widget
+- Acceptance:
+  - [x] Al abrir el modal se reproduce una animacion de entrada cuando data-animation es on
+  - [x] Al cerrar el modal se reproduce una animacion de salida cuando data-animation es on
+  - [x] Los errores de validacion de formulario muestran un efecto visual breve en el campo afectado
+  - [x] Si WebGL no esta disponible el widget funciona sin animaciones y sin errores en consola
+  - [x] data-animation off desactiva todas las animaciones Three.js
+  - [x] Tests verifican activacion, desactivacion y fallback sin WebGL
+- Risks: incremento del tamano del bundle; mitigar con tree-shaking en BC-011
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-009
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos de animaciones listados en proposal.md                                 | 10 %  | completado  |
+| discover  | Convenciones de integracion Three.js documentadas                               | 5 %   | completado  |
+| design    | Escenas de animacion y fallback sin WebGL definidos en design.md antes de tests | 15 %  | completado  |
+| design    | Regla data-animation on/off explicita en design.md                            | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Tests de animaciones escritos y en rojo antes de implementar                    | 15 %  | completado  |
+| test      | Tests cubren activacion, desactivacion y degradacion sin WebGL                  | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/animations/modal-scene.test.ts pasa en verde                   | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-009-microanimaciones-three-js/
+
+---
 
 ### BC-008 | Formulario de contacto y envio solo-contacto
 
