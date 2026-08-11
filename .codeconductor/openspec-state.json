@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-010",
+  "activeItemId": "BC-011",
   "taskCards": [
     {
-      "id": "BC-010-discover",
-      "backlogId": "BC-010",
+      "id": "BC-011-discover",
+      "backlogId": "BC-011",
       "phase": "discover",
-      "title": "BC-010: Discover scope and impact",
-      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-011: Discover scope and impact",
+      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-010-design",
-      "backlogId": "BC-010",
+      "id": "BC-011-design",
+      "backlogId": "BC-011",
       "phase": "design",
-      "title": "BC-010: Technical design",
-      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-011: Technical design",
+      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-010-discover"
+        "BC-011-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,61 +33,55 @@
       "status": "pending"
     },
     {
-      "id": "BC-010-test",
-      "backlogId": "BC-010",
+      "id": "BC-011-test",
+      "backlogId": "BC-011",
       "phase": "test",
-      "title": "BC-010: Test coverage",
-      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-011: Test coverage",
+      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-010-design"
+        "BC-011-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: POST a {baseUrl}/v1/contact/messages con Content-Type application/json y header x-api-key",
-        "Test covers: El body incluye name, email, message, locale, source, submittedAt en ISO8601 y metadata",
-        "Test covers: metadata de feedback incluye rating, ratingEmoji, formType feedback y comentario opcional",
-        "Test covers: metadata de contacto incluye formType contact",
-        "Test covers: Respuesta 401 muestra mensaje de error de API key invalida al usuario",
-        "Test covers: Respuesta 400 muestra mensaje de error de validacion al usuario",
-        "Test covers: Respuesta 5xx muestra mensaje generico de reintento al usuario",
-        "Test covers: Tests con fetch mockeado cubren exito, 401, 400 y 5xx"
+        "Test covers: bun run build genera dist/feedback.min.js como archivo unico IIFE",
+        "Test covers: El bundle incluye Three.js empaquetado sin requerir script adicional en el host",
+        "Test covers: El archivo minificado pesa menos de 200 KB gzip segun comando de verificacion documentado",
+        "Test covers: El script funciona cargado con atributo defer sin modulos ES en el host",
+        "Test covers: No existen imports a URLs externas en el bundle final"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-010-implement",
-      "backlogId": "BC-010",
+      "id": "BC-011-implement",
+      "backlogId": "BC-011",
       "phase": "implement",
-      "title": "BC-010: Implementation",
-      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-011: Implementation",
+      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-010-test"
+        "BC-011-test"
       ],
       "acceptanceCriteria": [
-        "POST a {baseUrl}/v1/contact/messages con Content-Type application/json y header x-api-key",
-        "El body incluye name, email, message, locale, source, submittedAt en ISO8601 y metadata",
-        "metadata de feedback incluye rating, ratingEmoji, formType feedback y comentario opcional",
-        "metadata de contacto incluye formType contact",
-        "Respuesta 401 muestra mensaje de error de API key invalida al usuario",
-        "Respuesta 400 muestra mensaje de error de validacion al usuario",
-        "Respuesta 5xx muestra mensaje generico de reintento al usuario",
-        "Tests con fetch mockeado cubren exito, 401, 400 y 5xx"
+        "bun run build genera dist/feedback.min.js como archivo unico IIFE",
+        "El bundle incluye Three.js empaquetado sin requerir script adicional en el host",
+        "El archivo minificado pesa menos de 200 KB gzip segun comando de verificacion documentado",
+        "El script funciona cargado con atributo defer sin modulos ES en el host",
+        "No existen imports a URLs externas en el bundle final"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-010-review",
-      "backlogId": "BC-010",
+      "id": "BC-011-review",
+      "backlogId": "BC-011",
       "phase": "review",
-      "title": "BC-010: Review and validation",
-      "prompt": "Backlog item BC-010 — Cliente API api.appsutiles.dev\n\nDescription: Implementar el cliente HTTP asincrono que envia mensajes a POST /v1/contact/messages de api.appsutiles.dev con headers x-api-key y mapeo de metadata para feedback y contacto.\nScope: src/api/contact-client.ts, tests/api/contact-client.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-011: Review and validation",
+      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-010-implement"
+        "BC-011-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -107,7 +101,8 @@
     "BC-007": "openspec/changes/bc-007-formulario-de-feedback-con-emojis",
     "BC-008": "openspec/changes/bc-008-formulario-de-contacto-y-envio-solo-contacto",
     "BC-009": "openspec/changes/bc-009-microanimaciones-three-js",
-    "BC-010": "openspec/changes/bc-010-cliente-api-api-appsutiles-dev"
+    "BC-010": "openspec/changes/bc-010-cliente-api-api-appsutiles-dev",
+    "BC-011": "openspec/changes/bc-011-build-bundle-unico-feedback-min-js"
   },
   "itemSnapshots": {}
 }

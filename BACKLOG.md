@@ -17,56 +17,10 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-011 | Build bundle unico feedback.min.js
-
-- Priority: P0
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-004, BC-005, BC-006, BC-007, BC-008, BC-009, BC-010
-- Description: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.
-- Scope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map
-- Out of scope: publicacion en npm registry, versionado semver automatico, source maps publicos en produccion
-- Business value: script de una sola linea para integradores sin configuracion de bundler en el sitio host
-- Acceptance:
-  - [ ] bun run build genera dist/feedback.min.js como archivo unico IIFE
-  - [ ] El bundle incluye Three.js empaquetado sin requerir script adicional en el host
-  - [ ] El archivo minificado pesa menos de 200 KB gzip segun comando de verificacion documentado
-  - [ ] El script funciona cargado con atributo defer sin modulos ES en el host
-  - [ ] No existen imports a URLs externas en el bundle final
-- Risks: tamano del bundle con Three.js; optimizar imports en implementacion
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-011
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos de build y salida dist listados en proposal.md                         | 10 %  | pendiente |
-| discover  | Convenciones de formato IIFE y minificacion documentadas                      | 5 %   | pendiente |
-| design    | Configuracion de bun build y limites de tamano definidos en design.md           | 15 %  | pendiente |
-| design    | Estrategia de tree-shaking de Three.js explicita en design.md                   | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Test de build escrito y en rojo antes de implementar pipeline                   | 15 %  | pendiente |
-| test      | Test verifica existencia de dist/feedback.min.js y ausencia de imports externos   | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun run build genera bundle funcional y tests de build pasan en verde           | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-011-build-cdn-bundle/
-
----
-
 ### BC-012 | Playground de pruebas
 
 - Priority: P1
-- Status: TODO
+- Status: READY
 - Type: feature
 - Owner: implementer
 - Depends on: BC-011
@@ -203,6 +157,52 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 ---
 
 ## Archive
+
+### BC-011 | Build bundle unico feedback.min.js
+
+- Priority: P0
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-004, BC-005, BC-006, BC-007, BC-008, BC-009, BC-010
+- Description: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.
+- Scope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map, src/bootstrap.ts, src/ui/modal.ts
+- Out of scope: publicacion en npm registry, versionado semver automatico, source maps publicos en produccion
+- Business value: script de una sola linea para integradores sin configuracion de bundler en el sitio host
+- Acceptance:
+  - [x] bun run build genera dist/feedback.min.js como archivo unico IIFE
+  - [x] El bundle incluye Three.js empaquetado sin requerir script adicional en el host
+  - [x] El archivo minificado pesa menos de 200 KB gzip segun comando de verificacion documentado
+  - [x] El script funciona cargado con atributo defer sin modulos ES en el host
+  - [x] No existen imports a URLs externas en el bundle final
+- Risks: tamano del bundle con Three.js; optimizar imports en implementacion
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-011
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos de build y salida dist listados en proposal.md                         | 10 %  | completado  |
+| discover  | Convenciones de formato IIFE y minificacion documentadas                      | 5 %   | completado  |
+| design    | Configuracion de bun build y limites de tamano definidos en design.md           | 15 %  | completado  |
+| design    | Estrategia de tree-shaking de Three.js explicita en design.md                   | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Test de build escrito y en rojo antes de implementar pipeline                   | 15 %  | completado  |
+| test      | Test verifica existencia de dist/feedback.min.js y ausencia de imports externos   | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun run build genera bundle funcional y tests de build pasan en verde           | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-011-build-bundle-unico-feedback-min-js/
+
+---
 
 ### BC-010 | Cliente API api.appsutiles.dev
 

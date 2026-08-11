@@ -98,3 +98,74 @@ describe("BC-004 initFeedbackWidget", () => {
     expect(instanceB.config.apiKey).toBe("key-b");
   });
 });
+
+function getTriggerButton(triggerHost: HTMLElement): HTMLButtonElement {
+  const button = triggerHost.shadowRoot?.querySelector("button");
+  if (!(button instanceof HTMLButtonElement)) {
+    throw new Error("Trigger button not found in shadow root");
+  }
+  return button;
+}
+
+function getModalOverlay(modalHost: HTMLElement): HTMLElement {
+  const overlay = modalHost.shadowRoot?.querySelector(".fw-modal-overlay");
+  if (!(overlay instanceof HTMLElement)) {
+    throw new Error("Modal overlay not found in shadow root");
+  }
+  return overlay;
+}
+
+describe("BC-011 bootstrap widget mount", () => {
+  afterEach(() => {
+    resetDom();
+  });
+
+  test("given_host_when_init_then_trigger_button_appended_to_body", () => {
+    const host = hostWith();
+    document.body.appendChild(host);
+
+    const instance = initFeedbackWidget(host);
+
+    expect(instance.trigger).toBeDefined();
+    const trigger = instance.trigger as HTMLElement;
+    expect(document.body.contains(trigger)).toBe(true);
+    expect(getTriggerButton(trigger)).toBeInstanceOf(HTMLButtonElement);
+  });
+
+  test("given_trigger_click_when_modal_open_then_dialog_visible", () => {
+    const host = hostWith();
+    document.body.appendChild(host);
+
+    const instance = initFeedbackWidget(host);
+    const trigger = instance.trigger as HTMLElement;
+    const modal = instance.modal;
+
+    expect(modal).toBeDefined();
+    getTriggerButton(trigger).click();
+
+    expect(modal?.isOpen()).toBe(true);
+    expect(getModalOverlay(modal?.host as HTMLElement).hidden).toBe(false);
+  });
+
+  test("given_init_when_feedback_panel_then_contains_feedback_form", () => {
+    const host = hostWith();
+    document.body.appendChild(host);
+
+    const instance = initFeedbackWidget(host);
+    const modalHost = instance.modal?.host as HTMLElement;
+    const feedbackPanel = modalHost.shadowRoot?.querySelector("#fw-panel-feedback");
+
+    expect(feedbackPanel?.querySelector(".fw-feedback-form")).not.toBeNull();
+  });
+
+  test("given_init_when_contact_panel_then_contains_contact_form", () => {
+    const host = hostWith();
+    document.body.appendChild(host);
+
+    const instance = initFeedbackWidget(host);
+    const modalHost = instance.modal?.host as HTMLElement;
+    const contactPanel = modalHost.shadowRoot?.querySelector("#fw-panel-contact");
+
+    expect(contactPanel?.querySelector(".fw-contact-form")).not.toBeNull();
+  });
+});

@@ -1,5 +1,8 @@
 import { createModalAnimationController } from "../animations/modal-scene";
+import { sendContactMessage } from "../api/contact-client";
 import type { WidgetConfig } from "../config/types";
+import { type ContactFormPayload, createContactForm } from "./contact-form";
+import { type FeedbackFormPayload, createFeedbackForm } from "./feedback-form";
 import { type TabItem, createTabs } from "./tabs";
 
 const DEFAULT_MODAL_TABS: TabItem[] = [
@@ -9,11 +12,32 @@ const DEFAULT_MODAL_TABS: TabItem[] = [
 
 const CLOSE_ARIA_LABEL = "Cerrar";
 
+export interface FeedbackModalOptions {
+  withForms?: boolean;
+}
+
 export interface FeedbackModal {
   host: HTMLElement;
   open(): void;
   close(): void;
   isOpen(): boolean;
+}
+
+function mountForms(config: WidgetConfig, tabs: { panels: HTMLElement }): void {
+  const feedbackPanel = tabs.panels.querySelector("#fw-panel-feedback");
+  const contactPanel = tabs.panels.querySelector("#fw-panel-contact");
+  if (!(feedbackPanel instanceof HTMLElement) || !(contactPanel instanceof HTMLElement)) {
+    return;
+  }
+
+  const submitHandler = (payload: ContactFormPayload | FeedbackFormPayload): void => {
+    void sendContactMessage(config, payload);
+  };
+
+  const feedbackForm = createFeedbackForm(config, submitHandler);
+  const contactForm = createContactForm(config, submitHandler);
+  feedbackPanel.appendChild(feedbackForm.root);
+  contactPanel.appendChild(contactForm.root);
 }
 
 function buildModalStyles(config: WidgetConfig): string {
@@ -106,7 +130,10 @@ function getFocusableElements(container: HTMLElement): HTMLElement[] {
   );
 }
 
-export function createFeedbackModal(config: WidgetConfig): FeedbackModal {
+export function createFeedbackModal(
+  config: WidgetConfig,
+  options?: FeedbackModalOptions,
+): FeedbackModal {
   const host = document.createElement("div");
   host.className = "fw-modal-host";
   host.style.position = "fixed";
@@ -134,6 +161,10 @@ export function createFeedbackModal(config: WidgetConfig): FeedbackModal {
   header.className = "fw-modal-header";
 
   const tabs = createTabs(DEFAULT_MODAL_TABS);
+
+  if (options?.withForms) {
+    mountForms(config, tabs);
+  }
 
   const closeButton = document.createElement("button");
   closeButton.type = "button";

@@ -1,18 +1,29 @@
 import { parseFeedbackConfig } from "./config/parse";
 import type { WidgetConfig } from "./config/types";
+import type { FeedbackModal } from "./ui/modal";
+import { createFeedbackModal } from "./ui/modal";
+import { createTriggerButton } from "./ui/trigger-button";
 
 const INITIALIZED_ATTR = "data-feedback-initialized";
 
 export interface FeedbackWidgetInstance {
   host: HTMLElement;
   config: WidgetConfig;
+  trigger?: HTMLElement;
+  modal?: FeedbackModal;
 }
 
 const instances = new WeakMap<HTMLElement, FeedbackWidgetInstance>();
 
 function createInstance(host: HTMLElement): FeedbackWidgetInstance {
   const config = parseFeedbackConfig(host);
-  const instance: FeedbackWidgetInstance = { host, config };
+  const modal = createFeedbackModal(config, { withForms: true });
+  const trigger = createTriggerButton(config, () => modal.open());
+
+  document.body.appendChild(trigger);
+  document.body.appendChild(modal.host);
+
+  const instance: FeedbackWidgetInstance = { host, config, trigger, modal };
   instances.set(host, instance);
   host.setAttribute(INITIALIZED_ATTR, "");
   return instance;
