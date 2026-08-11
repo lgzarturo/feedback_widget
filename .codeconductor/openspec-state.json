@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-004",
+  "activeItemId": "BC-005",
   "taskCards": [
     {
-      "id": "BC-004-discover",
-      "backlogId": "BC-004",
+      "id": "BC-005-discover",
+      "backlogId": "BC-005",
       "phase": "discover",
-      "title": "BC-004: Discover scope and impact",
-      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-005: Discover scope and impact",
+      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-004-design",
-      "backlogId": "BC-004",
+      "id": "BC-005-design",
+      "backlogId": "BC-005",
       "phase": "design",
-      "title": "BC-004: Technical design",
-      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-005: Technical design",
+      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-004-discover"
+        "BC-005-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,53 +33,55 @@
       "status": "pending"
     },
     {
-      "id": "BC-004-test",
-      "backlogId": "BC-004",
+      "id": "BC-005-test",
+      "backlogId": "BC-005",
       "phase": "test",
-      "title": "BC-004: Test coverage",
-      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-005: Test coverage",
+      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-004-design"
+        "BC-005-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: El widget se inicializa automaticamente al detectar un elemento [data-feedback] tras DOMContentLoaded",
-        "Test covers: La inicializacion es idempotente: un segundo intento sobre el mismo elemento no crea instancias duplicadas",
-        "Test covers: El script exporta una funcion initFeedbackWidget opcional para inicializacion manual",
-        "Test covers: Tests verifican auto-init y prevencion de doble instancia con DOM simulado"
+        "Test covers: El boton se renderiza en bottom-left, bottom-right, top-left o top-right segun data-position",
+        "Test covers: El color de fondo del boton respeta data-primary-color de la configuracion",
+        "Test covers: Los estilos estan encapsulados y no contaminan estilos globales del sitio host",
+        "Test covers: El boton es accesible con aria-label y responde a Enter y Space",
+        "Test covers: Tests verifican posicionamiento y aplicacion de color primario"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-004-implement",
-      "backlogId": "BC-004",
+      "id": "BC-005-implement",
+      "backlogId": "BC-005",
       "phase": "implement",
-      "title": "BC-004: Implementation",
-      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-005: Implementation",
+      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-004-test"
+        "BC-005-test"
       ],
       "acceptanceCriteria": [
-        "El widget se inicializa automaticamente al detectar un elemento [data-feedback] tras DOMContentLoaded",
-        "La inicializacion es idempotente: un segundo intento sobre el mismo elemento no crea instancias duplicadas",
-        "El script exporta una funcion initFeedbackWidget opcional para inicializacion manual",
-        "Tests verifican auto-init y prevencion de doble instancia con DOM simulado"
+        "El boton se renderiza en bottom-left, bottom-right, top-left o top-right segun data-position",
+        "El color de fondo del boton respeta data-primary-color de la configuracion",
+        "Los estilos estan encapsulados y no contaminan estilos globales del sitio host",
+        "El boton es accesible con aria-label y responde a Enter y Space",
+        "Tests verifican posicionamiento y aplicacion de color primario"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-004-review",
-      "backlogId": "BC-004",
+      "id": "BC-005-review",
+      "backlogId": "BC-005",
       "phase": "review",
-      "title": "BC-004: Review and validation",
-      "prompt": "Backlog item BC-004 — Bootstrap del widget y carga diferida\n\nDescription: Implementar el arranque del widget con carga diferida via script defer, auto-inicializacion al DOMContentLoaded cuando existe un elemento con atributo data-feedback.\nScope: src/bootstrap.ts, src/index.ts, tests/bootstrap.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-005: Review and validation",
+      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-004-implement"
+        "BC-005-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -93,7 +95,8 @@
     "BC-001": "openspec/changes/bc-001-scaffolding-bun-typescript-strict",
     "BC-002": "openspec/changes/bc-002-toolchain-de-calidad-biome-bun-test-ci-y-openspe",
     "BC-003": "openspec/changes/bc-003-contrato-de-configuracion-data-feedback",
-    "BC-004": "openspec/changes/bc-004-bootstrap-del-widget-y-carga-diferida"
+    "BC-004": "openspec/changes/bc-004-bootstrap-del-widget-y-carga-diferida",
+    "BC-005": "openspec/changes/bc-005-boton-flotante-configurable"
   },
   "itemSnapshots": {}
 }

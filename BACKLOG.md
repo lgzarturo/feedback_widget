@@ -17,52 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-005 | Boton flotante configurable
-
-- Priority: P1
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-004
-- Description: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.
-- Scope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts
-- Out of scope: modal, formularios, animaciones Three.js, envio API
-- Business value: punto de entrada visible y personalizable para el usuario final del sitio host
-- Acceptance:
-  - [ ] El boton se renderiza en bottom-left, bottom-right, top-left o top-right segun data-position
-  - [ ] El color de fondo del boton respeta data-primary-color de la configuracion
-  - [ ] Los estilos estan encapsulados y no contaminan estilos globales del sitio host
-  - [ ] El boton es accesible con aria-label y responde a Enter y Space
-  - [ ] Tests verifican posicionamiento y aplicacion de color primario
-- Risks: z-index insuficiente puede ocultar el boton detras de elementos del host
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-005
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos de UI del boton listados en proposal.md                                | 10 %  | pendiente |
-| discover  | Convenciones de encapsulacion de estilos documentadas                         | 5 %   | pendiente |
-| design    | Mapa de posiciones CSS y tokens de color definidos en design.md antes de tests  | 15 %  | pendiente |
-| design    | Requisitos de accesibilidad del boton explicitos en design.md                   | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de trigger-button escritos y en rojo antes de implementar                 | 15 %  | pendiente |
-| test      | Tests cubren las cuatro posiciones y aplicacion de color primario               | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/ui/trigger-button.test.ts pasa en verde                          | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-005-floating-trigger-button/
-
----
-
 ### BC-006 | Modal con tabs feedback y contacto
 
 - Priority: P1
@@ -483,6 +437,47 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 ---
 
 ## Archive
+
+### BC-005 | Boton flotante configurable
+
+- Priority: P1
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-004
+- Description: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.
+- Scope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts
+- Out of scope: modal, formularios, animaciones Three.js, envio API
+- Business value: punto de entrada visible y personalizable para el usuario final del sitio host
+- Acceptance:
+  - [x] El boton se renderiza en bottom-left, bottom-right, top-left o top-right segun data-position
+  - [x] El color de fondo del boton respeta data-primary-color de la configuracion
+  - [x] Los estilos estan encapsulados y no contaminan estilos globales del sitio host
+  - [x] El boton es accesible con aria-label y responde a Enter y Space
+  - [x] Tests verifican posicionamiento y aplicacion de color primario
+- Risks: z-index insuficiente puede ocultar el boton detras de elementos del host
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-005
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos de UI del boton listados en proposal.md                                | 10 %  | completado  |
+| discover  | Convenciones de encapsulacion de estilos documentadas                         | 5 %   | completado  |
+| design    | Mapa de posiciones CSS y tokens de color definidos en design.md antes de tests  | 15 %  | completado  |
+| design    | Requisitos de accesibilidad del boton explicitos en design.md                   | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Tests de trigger-button escritos y en rojo antes de implementar                 | 15 %  | completado  |
+| test      | Tests cubren las cuatro posiciones y aplicacion de color primario               | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/ui/trigger-button.test.ts pasa en verde                          | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-005-boton-flotante-configurable/
 
 ### BC-004 | Bootstrap del widget y carga diferida
 

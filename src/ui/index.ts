@@ -1,1 +1,2 @@
-/** Componentes UI del widget. Implementación en BC-005+. */
+/** Componentes UI del widget. */
+export { createTriggerButton } from "./trigger-button";
