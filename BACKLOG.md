@@ -17,52 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-008 | Formulario de contacto y envio solo-contacto
-
-- Priority: P1
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-006
-- Description: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.
-- Scope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts
-- Out of scope: cliente API HTTP, animaciones Three.js, formulario de feedback
-- Business value: canal de contacto directo sin obligar al usuario a calificar su experiencia
-- Acceptance:
-  - [ ] El formulario muestra campos name, email y message con labels accesibles
-  - [ ] Validacion inline rechaza email invalido y campos vacios antes del envio
-  - [ ] El usuario puede enviar contacto desde el tab Contacto sin interactuar con el tab Feedback
-  - [ ] El payload preparado incluye metadata con formType contact
-  - [ ] Tests verifican validacion de email, campos requeridos y payload de contacto
-- Risks: spam o abuso del formulario; mitigacion futura fuera de scope inicial
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-008
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos del formulario contacto listados en proposal.md                        | 10 %  | pendiente |
-| discover  | Convenciones de validacion de campos documentadas                               | 5 %   | pendiente |
-| design    | Contrato de campos y reglas de validacion definidos en design.md antes de tests | 15 %  | pendiente |
-| design    | Flujo solo-contacto sin pasar por feedback explicito en design.md                | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de contact-form escritos y en rojo antes de implementar                   | 15 %  | pendiente |
-| test      | Tests cubren email invalido, campos vacios y envio exitoso                      | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/ui/contact-form.test.ts pasa en verde                            | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-008-contact-form/
-
----
-
 ### BC-009 | Microanimaciones Three.js
 
 - Priority: P2
@@ -345,6 +299,52 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 ---
 
 ## Archive
+
+### BC-008 | Formulario de contacto y envio solo-contacto
+
+- Priority: P1
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-006
+- Description: Implementar el formulario de contacto con campos name, email y message, validacion inline y flujo independiente del tab de feedback para enviar solo un mensaje de contacto.
+- Scope: src/ui/contact-form.ts, tests/ui/contact-form.test.ts
+- Out of scope: cliente API HTTP, animaciones Three.js, formulario de feedback
+- Business value: canal de contacto directo sin obligar al usuario a calificar su experiencia
+- Acceptance:
+  - [x] El formulario muestra campos name, email y message con labels accesibles
+  - [x] Validacion inline rechaza email invalido y campos vacios antes del envio
+  - [x] El usuario puede enviar contacto desde el tab Contacto sin interactuar con el tab Feedback
+  - [x] El payload preparado incluye metadata con formType contact
+  - [x] Tests verifican validacion de email, campos requeridos y payload de contacto
+- Risks: spam o abuso del formulario; mitigacion futura fuera de scope inicial
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-008
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos del formulario contacto listados en proposal.md                        | 10 %  | completado  |
+| discover  | Convenciones de validacion de campos documentadas                               | 5 %   | completado  |
+| design    | Contrato de campos y reglas de validacion definidos en design.md antes de tests | 15 %  | completado  |
+| design    | Flujo solo-contacto sin pasar por feedback explicito en design.md                | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Tests de contact-form escritos y en rojo antes de implementar                   | 15 %  | completado  |
+| test      | Tests cubren email invalido, campos vacios y envio exitoso                      | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/ui/contact-form.test.ts pasa en verde                            | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-008-formulario-de-contacto-y-envio-solo-contacto/
+
+---
 
 ### BC-007 | Formulario de feedback con emojis
 
