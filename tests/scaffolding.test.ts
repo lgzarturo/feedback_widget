@@ -46,7 +46,11 @@ describe("BC-001 scaffolding", () => {
   });
 
   test("given_src_index_when_imported_then_compiles_without_error", () => {
-    expect(FEEDBACK_WIDGET_VERSION).toBe("0.0.0");
+    const pkg = JSON.parse(readFileSync(join(projectRoot, "package.json"), "utf-8")) as {
+      version: string;
+    };
+
+    expect(FEEDBACK_WIDGET_VERSION).toBe(pkg.version);
   });
 
   test("given_gitignore_when_read_then_ignores_node_modules_dist_and_env", () => {
