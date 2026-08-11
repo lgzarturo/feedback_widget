@@ -62,6 +62,10 @@ function mountForm(
   return form;
 }
 
+function dispatchKey(element: HTMLElement, key: string): void {
+  element.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+}
+
 describe("BC-007 createFeedbackForm", () => {
   afterEach(() => {
     resetDom();
@@ -173,5 +177,87 @@ describe("BC-007 createFeedbackForm", () => {
 
     expect(styleText).toContain("#ff5500");
     expect(document.head.querySelector("[data-feedback-form-styles]")).toBeNull();
+  });
+
+  test("given_emoji_focused_when_space_pressed_then_selects_rating", () => {
+    const form = mountForm();
+    const options = getEmojiOptions(form.root);
+
+    options[2]?.focus();
+    dispatchKey(options[2] as HTMLElement, " ");
+
+    expect(form.getSelectedRating()).toBe(3);
+    expect(options[2]?.getAttribute("aria-checked")).toBe("true");
+    expect(getSubmitButton(form.root).disabled).toBe(false);
+  });
+
+  test("given_emoji_focused_when_enter_pressed_then_selects_rating", () => {
+    const form = mountForm();
+    const options = getEmojiOptions(form.root);
+
+    options[4]?.focus();
+    dispatchKey(options[4] as HTMLElement, "Enter");
+
+    expect(form.getSelectedRating()).toBe(5);
+    expect(options[4]?.getAttribute("aria-checked")).toBe("true");
+  });
+
+  test("given_first_emoji_focused_when_arrow_right_pressed_then_selects_next_and_moves_focus", () => {
+    const form = mountForm();
+    const options = getEmojiOptions(form.root);
+
+    options[0]?.focus();
+    dispatchKey(options[0] as HTMLElement, "ArrowRight");
+
+    expect(form.getSelectedRating()).toBe(2);
+    expect(document.activeElement).toBe(options[1]);
+    expect(options[1]?.getAttribute("aria-checked")).toBe("true");
+  });
+
+  test("given_second_emoji_focused_when_arrow_left_pressed_then_selects_prev_and_moves_focus", () => {
+    const form = mountForm();
+    const options = getEmojiOptions(form.root);
+
+    options[1]?.focus();
+    dispatchKey(options[1] as HTMLElement, "ArrowLeft");
+
+    expect(form.getSelectedRating()).toBe(1);
+    expect(document.activeElement).toBe(options[0]);
+    expect(options[0]?.getAttribute("aria-checked")).toBe("true");
+  });
+
+  test("given_last_emoji_focused_when_arrow_right_pressed_then_wraps_to_first_rating", () => {
+    const form = mountForm();
+    const options = getEmojiOptions(form.root);
+
+    options[4]?.focus();
+    dispatchKey(options[4] as HTMLElement, "ArrowRight");
+
+    expect(form.getSelectedRating()).toBe(1);
+    expect(document.activeElement).toBe(options[0]);
+  });
+
+  test("given_emoji_selected_when_submit_button_clicked_then_invokes_onSubmit", () => {
+    let received: FeedbackFormPayload | undefined;
+    const form = mountForm({}, (payload) => {
+      received = payload;
+    });
+
+    getEmojiOptions(form.root)[1]?.click();
+    getSubmitButton(form.root).click();
+
+    expect(received?.rating).toBe(2);
+    expect(received?.ratingEmoji).toBe("😕");
+  });
+
+  test("given_comment_typed_when_input_event_then_counter_updates", () => {
+    const form = mountForm();
+    const textarea = getCommentTextarea(form.root);
+    const counter = getCharCounter(form.root);
+
+    textarea.value = "Hola";
+    textarea.dispatchEvent(new Event("input", { bubbles: true }));
+
+    expect(counter.textContent).toBe("4/500");
   });
 });

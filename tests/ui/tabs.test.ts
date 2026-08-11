@@ -96,4 +96,27 @@ describe("BC-006 createTabs", () => {
     expect(contactTab?.getAttribute("aria-selected")).toBe("true");
     expect(contactTab?.tabIndex).toBe(0);
   });
+
+  test("given_contact_tab_clicked_when_inspected_then_becomes_active", () => {
+    const tabs = createTabs(DEFAULT_TABS);
+    document.body.appendChild(tabs.tablist);
+
+    const contactTab = getTabButtons(tabs).find((btn) => btn.textContent === "Contacto");
+    contactTab?.click();
+
+    expect(tabs.getActiveTab()).toBe("contact");
+    expect(contactTab?.getAttribute("aria-selected")).toBe("true");
+  });
+
+  test("given_single_tab_when_arrow_right_pressed_then_stays_on_same_tab", () => {
+    const tabs = createTabs([{ id: "feedback", label: "Feedback" }]);
+    document.body.appendChild(tabs.tablist);
+
+    const tab = getTabButtons(tabs)[0] as HTMLButtonElement;
+    tab.focus();
+    dispatchKey(tab, "ArrowRight");
+
+    expect(tabs.getActiveTab()).toBe("feedback");
+    expect(document.activeElement).toBe(tab);
+  });
 });

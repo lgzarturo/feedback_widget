@@ -262,3 +262,33 @@ describe("BC-013 widget-flow", () => {
     expect(body.metadata.rating).toBe(3);
   });
 });
+
+describe("BC-013 widget-flow helpers", () => {
+  test("given_trigger_without_shadow_button_when_getTriggerButton_then_throws", () => {
+    const bareHost = document.createElement("div");
+    expect(() => getTriggerButton(bareHost)).toThrow("Trigger button not found in shadow root");
+  });
+
+  test("given_modal_without_shadow_root_when_getModalShadow_then_throws", () => {
+    const bareHost = document.createElement("div");
+    expect(() => getModalShadow(bareHost)).toThrow("Modal shadow root not found");
+  });
+
+  test("given_modal_without_overlay_when_getModalOverlay_then_throws", () => {
+    const bareHost = document.createElement("div");
+    bareHost.attachShadow({ mode: "open" });
+    expect(() => getModalOverlay(bareHost)).toThrow("Modal overlay not found");
+  });
+
+  test("given_modal_without_feedback_panel_when_getFeedbackPanel_then_throws", () => {
+    const bareHost = document.createElement("div");
+    bareHost.attachShadow({ mode: "open" });
+    expect(() => getFeedbackPanel(bareHost)).toThrow("Feedback panel not found");
+  });
+
+  test("given_modal_without_contact_panel_when_getContactPanel_then_throws", () => {
+    const bareHost = document.createElement("div");
+    bareHost.attachShadow({ mode: "open" });
+    expect(() => getContactPanel(bareHost)).toThrow("Contact panel not found");
+  });
+});

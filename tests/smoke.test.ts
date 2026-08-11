@@ -4,20 +4,38 @@ import { join } from "node:path";
 
 const projectRoot = join(import.meta.dir, "..");
 
+function runSmokeSelfTest(): void {
+  if (process.env.BC002_NESTED) {
+    expect(true).toBe(true);
+    return;
+  }
+
+  const result = Bun.spawnSync(["bun", "test", "tests/smoke.test.ts"], {
+    cwd: projectRoot,
+    stdout: "pipe",
+    stderr: "pipe",
+    env: { ...process.env, BC002_NESTED: "1" },
+  });
+  expect(result.exitCode).toBe(0);
+}
+
 describe("BC-002 toolchain", () => {
   test("given_bun_test_when_run_then_smoke_test_passes", () => {
-    if (process.env.BC002_NESTED) {
-      expect(true).toBe(true);
-      return;
-    }
+    runSmokeSelfTest();
+  });
 
-    const result = Bun.spawnSync(["bun", "test", "tests/smoke.test.ts"], {
-      cwd: projectRoot,
-      stdout: "pipe",
-      stderr: "pipe",
-      env: { ...process.env, BC002_NESTED: "1" },
-    });
-    expect(result.exitCode).toBe(0);
+  test("given_bc002_nested_env_when_smoke_self_test_then_skips_spawn", () => {
+    const saved = process.env.BC002_NESTED;
+    process.env.BC002_NESTED = "1";
+    try {
+      runSmokeSelfTest();
+    } finally {
+      if (saved === undefined) {
+        process.env.BC002_NESTED = undefined;
+      } else {
+        process.env.BC002_NESTED = saved;
+      }
+    }
   });
 
   test("given_openspec_config_when_read_then_test_runner_is_bun", () => {

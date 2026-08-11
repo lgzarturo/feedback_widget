@@ -75,7 +75,7 @@ describe("BC-012 playground", () => {
     expect(envExample).toMatch(/PLAYGROUND_API_KEY/);
   });
 
-  test("given_playground_script_when_spawned_then_server_starts", async () => {
+  async function runPlaygroundSpawnTest(): Promise<void> {
     if (process.env.BC012_NESTED) {
       expect(true).toBe(true);
       return;
@@ -115,6 +115,24 @@ describe("BC-012 playground", () => {
     } finally {
       proc.kill();
       await proc.exited;
+    }
+  }
+
+  test("given_playground_script_when_spawned_then_server_starts", async () => {
+    await runPlaygroundSpawnTest();
+  });
+
+  test("given_bc012_nested_env_when_playground_spawn_test_then_skips_spawn", async () => {
+    const saved = process.env.BC012_NESTED;
+    process.env.BC012_NESTED = "1";
+    try {
+      await runPlaygroundSpawnTest();
+    } finally {
+      if (saved === undefined) {
+        process.env.BC012_NESTED = undefined;
+      } else {
+        process.env.BC012_NESTED = saved;
+      }
     }
   });
 });

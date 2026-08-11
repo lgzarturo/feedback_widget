@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { MODAL_CLOSE_MS } from "../../src/animations/modal-scene";
+import { MODAL_CLOSE_MS, MODAL_OPEN_MS } from "../../src/animations/modal-scene";
 import { DEFAULT_WIDGET_CONFIG } from "../../src/config/parse";
 import type { WidgetConfig } from "../../src/config/types";
 import { createFeedbackModal } from "../../src/ui/modal";
@@ -49,6 +49,37 @@ function waitForModalAnimation(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, MODAL_CLOSE_MS + 50);
   });
+}
+
+function waitForOpenAnimation(): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, MODAL_OPEN_MS + 50);
+  });
+}
+
+async function flushMicrotasks(): Promise<void> {
+  await Promise.resolve();
+  await Promise.resolve();
+}
+
+function mockGlobalFetch(status = 201): {
+  captured: { url: string; init: RequestInit }[];
+  restore: () => void;
+} {
+  const captured: { url: string; init: RequestInit }[] = [];
+  const originalFetch = globalThis.fetch;
+
+  globalThis.fetch = (async (url: string | URL | Request, init?: RequestInit) => {
+    captured.push({ url: String(url), init: init ?? {} });
+    return new Response(null, { status, statusText: String(status) });
+  }) as typeof fetch;
+
+  return {
+    captured,
+    restore: () => {
+      globalThis.fetch = originalFetch;
+    },
+  };
 }
 
 function getFocusableElements(modalHost: HTMLElement): HTMLElement[] {
@@ -116,7 +147,7 @@ describe("BC-006 createFeedbackModal", () => {
   });
 
   test("given_modal_open_when_tab_pressed_at_last_focusable_then_focus_wraps_to_first", () => {
-    const modal = createFeedbackModal(configWith());
+    const modal = createFeedbackModal(configWith(), { withForms: true });
     document.body.appendChild(modal.host);
     modal.open();
 
@@ -153,5 +184,152 @@ describe("BC-006 createFeedbackModal", () => {
     const activeTab = modal.host.shadowRoot?.querySelector('[role="tab"][aria-selected="true"]');
     expect(activeTab?.textContent).toBe("Feedback");
     expect(contactTab).toBeDefined();
+  });
+
+  test("given_modal_already_open_when_open_called_again_then_stays_open", () => {
+    const modal = createFeedbackModal(configWith());
+    document.body.appendChild(modal.host);
+
+    modal.open();
+    modal.open();
+
+    expect(modal.isOpen()).toBe(true);
+    expect(getModalOverlay(modal.host).hidden).toBe(false);
+  });
+
+  test("given_modal_closed_when_close_called_then_remains_closed", async () => {
+    const modal = createFeedbackModal(configWith());
+    document.body.appendChild(modal.host);
+
+    modal.close();
+
+    expect(modal.isOpen()).toBe(false);
+    await waitForModalAnimation();
+    expect(getModalOverlay(modal.host).hidden).toBe(true);
+  });
+
+  test("given_modal_open_when_shift_tab_at_first_focusable_then_focus_wraps_to_last", () => {
+    const modal = createFeedbackModal(configWith(), { withForms: true });
+    document.body.appendChild(modal.host);
+    modal.open();
+
+    const focusable = getFocusableElements(modal.host);
+    expect(focusable.length).toBeGreaterThan(1);
+
+    const first = focusable[0] as HTMLElement;
+    const last = focusable[focusable.length - 1] as HTMLElement;
+    first.focus();
+
+    getDialog(modal.host).dispatchEvent(
+      new KeyboardEvent("keydown", { key: "Tab", shiftKey: true, bubbles: true }),
+    );
+
+    expect(modal.host.shadowRoot?.activeElement).toBe(last);
+  });
+
+  test("given_focused_element_before_open_when_modal_closes_then_focus_restored", async () => {
+    const externalButton = document.createElement("button");
+    externalButton.textContent = "External";
+    document.body.appendChild(externalButton);
+    externalButton.focus();
+
+    const modal = createFeedbackModal(configWith());
+    document.body.appendChild(modal.host);
+    modal.open();
+    modal.close();
+
+    await waitForModalAnimation();
+
+    expect(document.activeElement).toBe(externalButton);
+  });
+
+  test("given_modal_opened_when_animation_completes_then_first_tab_receives_focus", async () => {
+    const modal = createFeedbackModal(configWith());
+    document.body.appendChild(modal.host);
+
+    modal.open();
+    await waitForOpenAnimation();
+
+    const firstTab = modal.host.shadowRoot?.querySelector('[role="tab"][tabindex="0"]');
+    expect(modal.host.shadowRoot?.activeElement).toBe(firstTab);
+  });
+
+  test("given_modal_with_forms_when_feedback_submitted_then_fetch_receives_payload", async () => {
+    const fetchMock = mockGlobalFetch(201);
+    const modal = createFeedbackModal(
+      configWith({ apiKey: "modal-test-key", baseUrl: "https://api.test.dev" }),
+      { withForms: true },
+    );
+    document.body.appendChild(modal.host);
+    modal.open();
+
+    const feedbackPanel = modal.host.shadowRoot?.querySelector("#fw-panel-feedback");
+    expect(feedbackPanel).not.toBeNull();
+
+    const emojiOptions = [...(feedbackPanel?.querySelectorAll(".fw-emoji-option") ?? [])].filter(
+      (el): el is HTMLButtonElement => el instanceof HTMLButtonElement,
+    );
+    emojiOptions[3]?.click();
+
+    const submitButton = feedbackPanel?.querySelector(".fw-submit");
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.click();
+    }
+
+    await flushMicrotasks();
+
+    expect(fetchMock.captured).toHaveLength(1);
+    expect(fetchMock.captured[0]?.url).toBe("https://api.test.dev/v1/contact/messages");
+    const body = JSON.parse(String(fetchMock.captured[0]?.init.body));
+    expect(body.metadata).toEqual({
+      formType: "feedback",
+      rating: 4,
+      ratingEmoji: "🙂",
+    });
+
+    fetchMock.restore();
+  });
+
+  test("given_modal_with_forms_when_contact_submitted_then_fetch_receives_contact_payload", async () => {
+    const fetchMock = mockGlobalFetch(201);
+    const modal = createFeedbackModal(configWith({ apiKey: "modal-test-key" }), {
+      withForms: true,
+    });
+    document.body.appendChild(modal.host);
+    modal.open();
+
+    const contactPanel = modal.host.shadowRoot?.querySelector("#fw-panel-contact");
+    const contactTab = modal.host.shadowRoot?.querySelectorAll('[role="tab"]')[1];
+    if (contactTab instanceof HTMLElement) {
+      contactTab.click();
+    }
+
+    const nameInput = contactPanel?.querySelector("#fw-contact-name");
+    const emailInput = contactPanel?.querySelector("#fw-contact-email");
+    const messageInput = contactPanel?.querySelector("#fw-contact-message");
+    const submitButton = contactPanel?.querySelector(".fw-submit");
+
+    if (nameInput instanceof HTMLInputElement) {
+      nameInput.value = "María";
+    }
+    if (emailInput instanceof HTMLInputElement) {
+      emailInput.value = "maria@example.com";
+    }
+    if (messageInput instanceof HTMLTextAreaElement) {
+      messageInput.value = "Consulta modal";
+    }
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.click();
+    }
+
+    await flushMicrotasks();
+
+    expect(fetchMock.captured).toHaveLength(1);
+    const body = JSON.parse(String(fetchMock.captured[0]?.init.body));
+    expect(body.name).toBe("María");
+    expect(body.email).toBe("maria@example.com");
+    expect(body.metadata).toEqual({ formType: "contact" });
+
+    fetchMock.restore();
   });
 });

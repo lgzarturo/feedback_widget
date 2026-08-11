@@ -62,10 +62,6 @@ function wait(ms: number): Promise<void> {
 
 function ensureModalStyles(dialog: HTMLElement): void {
   const root = dialog.getRootNode();
-  if (!(root instanceof ShadowRoot || root instanceof Document)) {
-    return;
-  }
-
   const container = root instanceof ShadowRoot ? root : document.head;
   const marker = "fw-modal-animation-styles";
   if (container.querySelector(`style[data-${marker}]`)) {

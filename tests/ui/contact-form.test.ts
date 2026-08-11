@@ -224,4 +224,43 @@ describe("BC-008 createContactForm", () => {
     expect(styleText).toContain("#ff5500");
     expect(document.head.querySelector("[data-contact-form-styles]")).toBeNull();
   });
+
+  test("given_empty_name_when_blur_then_shows_required_error", () => {
+    const form = mountForm();
+    const nameInput = getNameInput(form.root);
+
+    nameInput.dispatchEvent(new Event("blur", { bubbles: true }));
+
+    expect(getFieldError(form.root, "fw-contact-name").hidden).toBe(false);
+    expect(getFieldError(form.root, "fw-contact-name").textContent).toBe(
+      "El nombre es obligatorio",
+    );
+  });
+
+  test("given_invalid_email_when_blur_then_shows_email_error", () => {
+    const form = mountForm();
+
+    getNameInput(form.root).value = "Juan";
+    getEmailInput(form.root).value = "invalid";
+    getEmailInput(form.root).dispatchEvent(new Event("blur", { bubbles: true }));
+
+    expect(getFieldError(form.root, "fw-contact-email").hidden).toBe(false);
+    expect(getFieldError(form.root, "fw-contact-email").textContent).toBe(
+      "Ingresa un email válido",
+    );
+  });
+
+  test("given_valid_field_when_blur_then_clears_previous_error", () => {
+    const form = mountForm();
+    const nameInput = getNameInput(form.root);
+
+    nameInput.dispatchEvent(new Event("blur", { bubbles: true }));
+    expect(getFieldError(form.root, "fw-contact-name").hidden).toBe(false);
+
+    nameInput.value = "Ana";
+    nameInput.dispatchEvent(new Event("blur", { bubbles: true }));
+
+    expect(getFieldError(form.root, "fw-contact-name").hidden).toBe(true);
+    expect(nameInput.classList.contains("fw-field-input--error")).toBe(false);
+  });
 });

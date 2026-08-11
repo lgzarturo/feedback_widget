@@ -47,6 +47,35 @@ describe("BC-004 bootstrapFeedbackWidget", () => {
       document.dispatchEvent(new Event("DOMContentLoaded"));
     }).not.toThrow();
   });
+
+  test("given_document_still_loading_when_bootstrap_then_defers_until_domcontentloaded", () => {
+    const host = hostWith({ "data-api-key": "deferred-key" });
+    document.body.appendChild(host);
+
+    const readyStateDescriptor = Object.getOwnPropertyDescriptor(document, "readyState");
+    Object.defineProperty(document, "readyState", {
+      configurable: true,
+      get: () => "loading",
+    });
+
+    try {
+      bootstrapFeedbackWidget();
+      expect(host.hasAttribute("data-feedback-initialized")).toBe(false);
+
+      Object.defineProperty(document, "readyState", {
+        configurable: true,
+        get: () => "interactive",
+      });
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+
+      expect(host.hasAttribute("data-feedback-initialized")).toBe(true);
+      expect(initFeedbackWidget(host).config.apiKey).toBe("deferred-key");
+    } finally {
+      if (readyStateDescriptor) {
+        Object.defineProperty(document, "readyState", readyStateDescriptor);
+      }
+    }
+  });
 });
 
 describe("BC-004 initFeedbackWidget", () => {
@@ -167,5 +196,15 @@ describe("BC-011 bootstrap widget mount", () => {
     const contactPanel = modalHost.shadowRoot?.querySelector("#fw-panel-contact");
 
     expect(contactPanel?.querySelector(".fw-contact-form")).not.toBeNull();
+  });
+
+  test("given_trigger_without_shadow_button_when_getTriggerButton_then_throws", () => {
+    const bareHost = document.createElement("div");
+    expect(() => getTriggerButton(bareHost)).toThrow("Trigger button not found in shadow root");
+  });
+
+  test("given_modal_without_overlay_when_getModalOverlay_then_throws", () => {
+    const bareHost = document.createElement("div");
+    expect(() => getModalOverlay(bareHost)).toThrow("Modal overlay not found in shadow root");
   });
 });

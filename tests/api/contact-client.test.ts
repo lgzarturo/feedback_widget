@@ -207,4 +207,19 @@ describe("BC-010 sendContactMessage", () => {
       userMessage: "Error del servidor. Intenta de nuevo.",
     });
   });
+
+  test("given_api_returns_unmapped_status_when_send_then_user_message_server_retry", async () => {
+    const { fetchFn } = mockFetch(403);
+
+    const result = await sendContactMessage(configWith(), contactPayload(), {
+      fetchFn,
+      now: () => FIXED_NOW,
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      status: 403,
+      userMessage: "Error del servidor. Intenta de nuevo.",
+    });
+  });
 });
