@@ -102,13 +102,19 @@ describe("BC-014 jsdelivr release", () => {
     expect(workflow).toMatch(/v\*/);
   });
 
-  test("given_release_workflow_when_read_then_builds_and_publishes_bundle", () => {
+  test("given_release_workflow_when_read_then_builds_and_deploys_cdn_to_gh_pages", () => {
     const workflow = readFileSync(releaseWorkflowPath, "utf-8");
 
     expect(workflow).toMatch(/bun install/);
     expect(workflow).toMatch(/bun test/);
     expect(workflow).toMatch(/bun run build/);
-    expect(workflow).toMatch(/dist\/feedback\.min\.js/);
+    expect(workflow).toMatch(/cdn-release\/dist/);
+    expect(workflow).toMatch(/feedback\.min\.js/);
+    expect(workflow).toMatch(/peaceiris\/actions-gh-pages/);
+    expect(workflow).toMatch(/publish_branch:\s*gh-pages/);
+    expect(workflow).toMatch(/VERSION=/);
+    expect(workflow).toMatch(/git tag -fa/);
+    expect(workflow).not.toMatch(/softprops\/action-gh-release/);
   });
 
   test("given_readme_when_read_then_documents_jsdelivr_url_and_defer", () => {

@@ -1,4 +1,4 @@
-name: Release
+name: Release CDN
 
 on:
   push:
@@ -12,9 +12,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -28,11 +32,30 @@ jobs:
       - name: Test
         run: bun test
 
-      - name: Build bundle
+      - name: Build
         run: bun run build
 
-      - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Prepare CDN artifacts
+        run: |
+          mkdir -p cdn-release/dist
+          cp dist/feedback.min.js cdn-release/dist/
+          test -f cdn-release/dist/feedback.min.js
+          size=$(wc -c < cdn-release/dist/feedback.min.js)
+          test "$size" -gt 500
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          files: dist/feedback.min.js
-          generate_release_notes: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./cdn-release
+          publish_branch: gh-pages
+          force_orphan: true
+
+      - name: Tag CDN release on gh-pages
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages
+          git tag -fa "$VERSION" "origin/gh-pages" -m "CDN release $VERSION"
+          git push origin "refs/tags/$VERSION" --force
