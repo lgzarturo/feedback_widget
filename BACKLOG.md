@@ -20,7 +20,7 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 ### BC-013 | Suite de pruebas unitarias e integracion
 
 - Priority: P1
-- Status: TODO
+- Status: DONE
 - Type: feature
 - Owner: tester
 - Depends on: BC-002, BC-010
@@ -29,14 +29,14 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 - Out of scope: pruebas end-to-end con navegador real, pruebas de carga, pruebas contra API de produccion
 - Business value: regresion automatica que garantiza calidad antes de cada release CDN
 - Acceptance:
-  - [ ] bun test ejecuta todos los tests sin fallos en CI
-  - [ ] tests/config cubre parser data-feedback con casos validos e invalidos
-  - [ ] tests/api cubre mapeo de payload feedback y contacto con fetch mockeado
-  - [ ] tests/integration/widget-flow.test.ts verifica flujo abrir modal, seleccionar emoji y preparar envio
-  - [ ] tests/integration/widget-flow.test.ts verifica flujo solo-contacto sin tab feedback
-  - [ ] Cobertura de lineas mayor o igual a 80 por ciento segun reporte bun test --coverage
+  - [x] bun test ejecuta todos los tests sin fallos en CI
+  - [x] tests/config cubre parser data-feedback con casos validos e invalidos
+  - [x] tests/api cubre mapeo de payload feedback y contacto con fetch mockeado
+  - [x] tests/integration/widget-flow.test.ts verifica flujo abrir modal, seleccionar emoji y preparar envio
+  - [x] tests/integration/widget-flow.test.ts verifica flujo solo-contacto sin tab feedback
+  - [x] Cobertura de lineas mayor o igual a 80 por ciento segun reporte bun test --coverage
 - Risks: tests de DOM fragiles; usar helpers de test estables
-- Progress: 0%
+- Progress: 100%
 - Reviewer: reviewer
 - Last update: 2026-08-10
 
@@ -47,20 +47,20 @@ Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance
 
 | Fase      | Criterio                                                                        | Peso  | Estado   |
 |-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Inventario de tests existentes y faltantes listado en proposal.md                | 10 %  | pendiente |
-| discover  | Convenciones de mocks y helpers DOM documentadas                                | 5 %   | pendiente |
-| design    | Plan de cobertura por modulo definido en design.md antes de escribir tests      | 15 %  | pendiente |
-| design    | Escenarios de integracion feedback y solo-contacto explicitos en design.md      | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de integracion escritos y en rojo antes de completar implementacion       | 15 %  | pendiente |
-| test      | Tests cubren flujos happy path y errores de API con fetch mockeado              | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Suite completa sin tests triviales que solo assertan constantes                  | 10 %  | pendiente |
-| implement | bun test --coverage reporta 80 por ciento o mas de cobertura de lineas          | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
+| discover  | Inventario de tests existentes y faltantes listado en proposal.md                | 10 %  | completado |
+| discover  | Convenciones de mocks y helpers DOM documentadas                                | 5 %   | completado |
+| design    | Plan de cobertura por modulo definido en design.md antes de escribir tests      | 15 %  | completado |
+| design    | Escenarios de integracion feedback y solo-contacto explicitos en design.md      | 10 %  | completado |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado |
+| test      | Tests de integracion escritos y en rojo antes de completar implementacion       | 15 %  | completado |
+| test      | Tests cubren flujos happy path y errores de API con fetch mockeado              | 10 %  | completado |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado |
+| implement | Suite completa sin tests triviales que solo assertan constantes                  | 10 %  | completado |
+| implement | bun test --coverage reporta 80 por ciento o mas de cobertura de lineas          | 10 %  | completado |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado |
 
-OpenSpec folder: openspec/changes/bc-013-test-suite/
+OpenSpec folder: openspec/changes/bc-013-suite-de-pruebas-unitarias-e-integracion/
 
 ---
 

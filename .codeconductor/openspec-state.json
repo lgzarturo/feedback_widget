@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-012",
+  "activeItemId": "BC-013",
   "taskCards": [
     {
-      "id": "BC-012-discover",
-      "backlogId": "BC-012",
+      "id": "BC-013-discover",
+      "backlogId": "BC-013",
       "phase": "discover",
-      "title": "BC-012: Discover scope and impact",
-      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-013: Discover scope and impact",
+      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-012-design",
-      "backlogId": "BC-012",
+      "id": "BC-013-design",
+      "backlogId": "BC-013",
       "phase": "design",
-      "title": "BC-012: Technical design",
-      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-013: Technical design",
+      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-012-discover"
+        "BC-013-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,55 +33,57 @@
       "status": "pending"
     },
     {
-      "id": "BC-012-test",
-      "backlogId": "BC-012",
+      "id": "BC-013-test",
+      "backlogId": "BC-013",
       "phase": "test",
-      "title": "BC-012: Test coverage",
-      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-013: Test coverage",
+      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-012-design"
+        "BC-013-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: bun run playground sirve playground/index.html en localhost con el widget cargado",
-        "Test covers: Controles permiten cambiar data-position entre las cuatro esquinas en vivo",
-        "Test covers: Controles permiten cambiar data-primary-color y data-accent-color en vivo",
-        "Test covers: La pagina demuestra ambos tabs Feedback y Contacto del modal",
-        "Test covers: README documenta como ejecutar el playground localmente"
+        "Test covers: bun test ejecuta todos los tests sin fallos en CI",
+        "Test covers: tests/config cubre parser data-feedback con casos validos e invalidos",
+        "Test covers: tests/api cubre mapeo de payload feedback y contacto con fetch mockeado",
+        "Test covers: tests/integration/widget-flow.test.ts verifica flujo abrir modal, seleccionar emoji y preparar envio",
+        "Test covers: tests/integration/widget-flow.test.ts verifica flujo solo-contacto sin tab feedback",
+        "Test covers: Cobertura de lineas mayor o igual a 80 por ciento segun reporte bun test --coverage"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-012-implement",
-      "backlogId": "BC-012",
+      "id": "BC-013-implement",
+      "backlogId": "BC-013",
       "phase": "implement",
-      "title": "BC-012: Implementation",
-      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-013: Implementation",
+      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-012-test"
+        "BC-013-test"
       ],
       "acceptanceCriteria": [
-        "bun run playground sirve playground/index.html en localhost con el widget cargado",
-        "Controles permiten cambiar data-position entre las cuatro esquinas en vivo",
-        "Controles permiten cambiar data-primary-color y data-accent-color en vivo",
-        "La pagina demuestra ambos tabs Feedback y Contacto del modal",
-        "README documenta como ejecutar el playground localmente"
+        "bun test ejecuta todos los tests sin fallos en CI",
+        "tests/config cubre parser data-feedback con casos validos e invalidos",
+        "tests/api cubre mapeo de payload feedback y contacto con fetch mockeado",
+        "tests/integration/widget-flow.test.ts verifica flujo abrir modal, seleccionar emoji y preparar envio",
+        "tests/integration/widget-flow.test.ts verifica flujo solo-contacto sin tab feedback",
+        "Cobertura de lineas mayor o igual a 80 por ciento segun reporte bun test --coverage"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-012-review",
-      "backlogId": "BC-012",
+      "id": "BC-013-review",
+      "backlogId": "BC-013",
       "phase": "review",
-      "title": "BC-012: Review and validation",
-      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-013: Review and validation",
+      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-012-implement"
+        "BC-013-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -103,7 +105,8 @@
     "BC-009": "openspec/changes/bc-009-microanimaciones-three-js",
     "BC-010": "openspec/changes/bc-010-cliente-api-api-appsutiles-dev",
     "BC-011": "openspec/changes/bc-011-build-bundle-unico-feedback-min-js",
-    "BC-012": "openspec/changes/bc-012-playground-de-pruebas"
+    "BC-012": "openspec/changes/bc-012-playground-de-pruebas",
+    "BC-013": "openspec/changes/bc-013-suite-de-pruebas-unitarias-e-integracion"
   },
   "itemSnapshots": {}
 }
