@@ -38,7 +38,9 @@ El widget lee la configuración automáticamente desde el elemento HTML host don
 
 ## Integración CDN (jsDelivr)
 
-El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/) desde GitHub Releases. No requiere npm ni bundler en el sitio host.
+El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/). El push de un tag `v*` construye `feedback.min.js`, lo publica en la rama `gh-pages` y crea el tag semver sin prefijo `v` (por ejemplo `1.0.0`) apuntando a esa rama. No requiere npm ni bundler en el sitio host.
+
+> **Requisito:** el repositorio debe ser **público** para que jsDelivr indexe los archivos.
 
 ### URL del script
 
@@ -46,7 +48,7 @@ El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/)
 https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js
 ```
 
-Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.0`).
+Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.0`; jsDelivr resuelve al tag CDN `1.0.0` en `gh-pages`).
 
 | Versión | URL |
 | :--- | :--- |
