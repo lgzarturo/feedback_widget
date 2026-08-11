@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "activeItemId": "BC-001",
+  "taskCards": [
+    {
+      "id": "BC-001-discover",
+      "backlogId": "BC-001",
+      "phase": "discover",
+      "title": "BC-001: Discover scope and impact",
+      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nMap repository structure, conventions, and impact radius for this change.",
+      "agent": "repo-explorer",
+      "modelHint": "repo-explorer",
+      "dependsOn": [],
+      "acceptanceCriteria": [
+        "Repo map identifies relevant files and impact radius"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "BC-001-design",
+      "backlogId": "BC-001",
+      "phase": "design",
+      "title": "BC-001: Technical design",
+      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "agent": "architect",
+      "modelHint": "architect",
+      "dependsOn": [
+        "BC-001-discover"
+      ],
+      "acceptanceCriteria": [
+        "Technical plan lists files affected and approach"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "BC-001-test",
+      "backlogId": "BC-001",
+      "phase": "test",
+      "title": "BC-001: Test coverage",
+      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "agent": "tester",
+      "modelHint": "tester",
+      "dependsOn": [
+        "BC-001-design"
+      ],
+      "acceptanceCriteria": [
+        "Test covers: bun install && bun run typecheck ejecuta sin errores en un clon limpio",
+        "Test covers: tsconfig.json tiene strict true con target y module ESNext",
+        "Test covers: Existen las carpetas src/config, src/ui, src/api y src/animations con src/index.ts compilando",
+        "Test covers: .gitignore excluye node_modules, dist y archivos de entorno local"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "BC-001-implement",
+      "backlogId": "BC-001",
+      "phase": "implement",
+      "title": "BC-001: Implementation",
+      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "agent": "implementer",
+      "modelHint": "implementer",
+      "dependsOn": [
+        "BC-001-test"
+      ],
+      "acceptanceCriteria": [
+        "bun install && bun run typecheck ejecuta sin errores en un clon limpio",
+        "tsconfig.json tiene strict true con target y module ESNext",
+        "Existen las carpetas src/config, src/ui, src/api y src/animations con src/index.ts compilando",
+        ".gitignore excluye node_modules, dist y archivos de entorno local"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "BC-001-review",
+      "backlogId": "BC-001",
+      "phase": "review",
+      "title": "BC-001: Review and validation",
+      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "agent": "reviewer",
+      "modelHint": "reviewer",
+      "dependsOn": [
+        "BC-001-implement"
+      ],
+      "acceptanceCriteria": [
+        "All acceptance criteria verified",
+        "Tests pass",
+        "No scope creep beyond backlog item"
+      ],
+      "status": "pending"
+    }
+  ],
+  "changePaths": {
+    "BC-001": "openspec/changes/bc-001-scaffolding-bun-typescript-strict"
+  },
+  "itemSnapshots": {}
+}
