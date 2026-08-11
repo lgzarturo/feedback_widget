@@ -34,23 +34,51 @@ El widget lee la configuración automáticamente desde el elemento HTML host don
 | `data-animation` | `string` | Estado de las animaciones UI (`on` / `off`). | `"on"` |
 | `data-z-index` | `number` | Índice de capa CSS para superposición. | `9999` |
 
-### Ejemplo de Integración HTML
+---
+
+## Integración CDN (jsDelivr)
+
+El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/) desde GitHub Releases. No requiere npm ni bundler en el sitio host.
+
+### URL del script
+
+```
+https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js
+```
+
+Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.0`).
+
+| Versión | URL |
+| :--- | :--- |
+| Última estable (`v1.0.0`) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.0/dist/feedback.min.js` |
+
+Para actualizar, cambia solo el segmento `@vX.Y.Z` en la URL del script. Consulta [CHANGELOG.md](CHANGELOG.md) para el historial de versiones.
+
+### Ejemplo de integración HTML
 
 ```html
-<!-- Elemento Host con Configuración -->
-<div 
-  id="feedback-widget"
+<div
   data-feedback
-  data-api-key="pk_live_123456789"
-  data-source="landing-page"
+  data-api-key="TU_API_KEY"
+  data-source="mi-sitio"
   data-position="bottom-right"
-  data-primary-color="#2563eb"
   data-locale="es">
 </div>
-
-<!-- Script del Widget via CDN -->
-<script defer src="https://cdn.appsutiles.dev/feedback-widget.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.0/dist/feedback.min.js"></script>
 ```
+
+El atributo `defer` garantiza carga diferida sin bloquear el parsing del HTML host.
+
+### Verificación manual con jsDelivr
+
+Para confirmar que la URL CDN funciona antes de integrar en producción:
+
+1. Abre `playground/index.html` y cambia temporalmente el `src` del script a la URL jsDelivr de arriba.
+2. Ejecuta `bun run playground` y abre [http://localhost:3456](http://localhost:3456).
+3. Verifica que el botón flotante aparece y el modal se abre correctamente.
+4. Restaura el `src` local (`/dist/feedback.min.js`) cuando termines.
+
+> **Nota:** jsDelivr puede tardar unos minutos en cachear un tag recién publicado.
 
 ---
 
@@ -107,7 +135,8 @@ Para pruebas con API real, copia `.env.example` a `.env` y configura `PLAYGROUND
 feedback_widget/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml             # Workflow de integración continua (GitHub Actions)
+│       ├── ci.yml             # Workflow de integración continua (GitHub Actions)
+│       └── release.yml        # Workflow de publicación en tags v*
 ├── openspec/                  # Especificaciones OpenSpec de cambios (proposal, design, specs)
 ├── src/
 │   ├── animations/            # Lógica y estilos de animación

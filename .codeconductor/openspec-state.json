@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-013",
+  "activeItemId": "BC-014",
   "taskCards": [
     {
-      "id": "BC-013-discover",
-      "backlogId": "BC-013",
+      "id": "BC-014-discover",
+      "backlogId": "BC-014",
       "phase": "discover",
-      "title": "BC-013: Discover scope and impact",
-      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-014: Discover scope and impact",
+      "prompt": "Backlog item BC-014 — Publicacion jsDelivr via GitHub Releases\n\nDescription: Configurar el flujo de publicacion del bundle en jsDelivr via GitHub Releases con tags semver y documentar la URL de integracion CDN en README.\nScope: .github/workflows/release.yml, README.md seccion CDN, CHANGELOG.md\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-013-design",
-      "backlogId": "BC-013",
+      "id": "BC-014-design",
+      "backlogId": "BC-014",
       "phase": "design",
-      "title": "BC-013: Technical design",
-      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-014: Technical design",
+      "prompt": "Backlog item BC-014 — Publicacion jsDelivr via GitHub Releases\n\nDescription: Configurar el flujo de publicacion del bundle en jsDelivr via GitHub Releases con tags semver y documentar la URL de integracion CDN en README.\nScope: .github/workflows/release.yml, README.md seccion CDN, CHANGELOG.md\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-013-discover"
+        "BC-014-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,57 +33,55 @@
       "status": "pending"
     },
     {
-      "id": "BC-013-test",
-      "backlogId": "BC-013",
+      "id": "BC-014-test",
+      "backlogId": "BC-014",
       "phase": "test",
-      "title": "BC-013: Test coverage",
-      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-014: Test coverage",
+      "prompt": "Backlog item BC-014 — Publicacion jsDelivr via GitHub Releases\n\nDescription: Configurar el flujo de publicacion del bundle en jsDelivr via GitHub Releases con tags semver y documentar la URL de integracion CDN en README.\nScope: .github/workflows/release.yml, README.md seccion CDN, CHANGELOG.md\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-013-design"
+        "BC-014-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: bun test ejecuta todos los tests sin fallos en CI",
-        "Test covers: tests/config cubre parser data-feedback con casos validos e invalidos",
-        "Test covers: tests/api cubre mapeo de payload feedback y contacto con fetch mockeado",
-        "Test covers: tests/integration/widget-flow.test.ts verifica flujo abrir modal, seleccionar emoji y preparar envio",
-        "Test covers: tests/integration/widget-flow.test.ts verifica flujo solo-contacto sin tab feedback",
-        "Test covers: Cobertura de lineas mayor o igual a 80 por ciento segun reporte bun test --coverage"
+        "Test covers: Push de tag v* dispara workflow que adjunta dist/feedback.min.js al GitHub Release",
+        "Test covers: README documenta URL https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js",
+        "Test covers: README incluye ejemplo HTML minimo con script defer y div data-feedback",
+        "Test covers: CHANGELOG.md registra la primera version publicada con instrucciones de actualizacion",
+        "Test covers: Verificacion manual documentada: cargar URL jsDelivr en playground y confirmar widget funcional"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-013-implement",
-      "backlogId": "BC-013",
+      "id": "BC-014-implement",
+      "backlogId": "BC-014",
       "phase": "implement",
-      "title": "BC-013: Implementation",
-      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-014: Implementation",
+      "prompt": "Backlog item BC-014 — Publicacion jsDelivr via GitHub Releases\n\nDescription: Configurar el flujo de publicacion del bundle en jsDelivr via GitHub Releases con tags semver y documentar la URL de integracion CDN en README.\nScope: .github/workflows/release.yml, README.md seccion CDN, CHANGELOG.md\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-013-test"
+        "BC-014-test"
       ],
       "acceptanceCriteria": [
-        "bun test ejecuta todos los tests sin fallos en CI",
-        "tests/config cubre parser data-feedback con casos validos e invalidos",
-        "tests/api cubre mapeo de payload feedback y contacto con fetch mockeado",
-        "tests/integration/widget-flow.test.ts verifica flujo abrir modal, seleccionar emoji y preparar envio",
-        "tests/integration/widget-flow.test.ts verifica flujo solo-contacto sin tab feedback",
-        "Cobertura de lineas mayor o igual a 80 por ciento segun reporte bun test --coverage"
+        "Push de tag v* dispara workflow que adjunta dist/feedback.min.js al GitHub Release",
+        "README documenta URL https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js",
+        "README incluye ejemplo HTML minimo con script defer y div data-feedback",
+        "CHANGELOG.md registra la primera version publicada con instrucciones de actualizacion",
+        "Verificacion manual documentada: cargar URL jsDelivr en playground y confirmar widget funcional"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-013-review",
-      "backlogId": "BC-013",
+      "id": "BC-014-review",
+      "backlogId": "BC-014",
       "phase": "review",
-      "title": "BC-013: Review and validation",
-      "prompt": "Backlog item BC-013 — Suite de pruebas unitarias e integracion\n\nDescription: Consolidar la suite de pruebas unitarias e integracion que cubre parser de configuracion, formularios, cliente API y flujo completo de envio con fetch mockeado.\nScope: tests/config/, tests/ui/, tests/api/, tests/integration/widget-flow.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-014: Review and validation",
+      "prompt": "Backlog item BC-014 — Publicacion jsDelivr via GitHub Releases\n\nDescription: Configurar el flujo de publicacion del bundle en jsDelivr via GitHub Releases con tags semver y documentar la URL de integracion CDN en README.\nScope: .github/workflows/release.yml, README.md seccion CDN, CHANGELOG.md\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-013-implement"
+        "BC-014-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -106,7 +104,8 @@
     "BC-010": "openspec/changes/bc-010-cliente-api-api-appsutiles-dev",
     "BC-011": "openspec/changes/bc-011-build-bundle-unico-feedback-min-js",
     "BC-012": "openspec/changes/bc-012-playground-de-pruebas",
-    "BC-013": "openspec/changes/bc-013-suite-de-pruebas-unitarias-e-integracion"
+    "BC-013": "openspec/changes/bc-013-suite-de-pruebas-unitarias-e-integracion",
+    "BC-014": "openspec/changes/bc-014-publicacion-jsdelivr-via-github-releases"
   },
   "itemSnapshots": {}
 }

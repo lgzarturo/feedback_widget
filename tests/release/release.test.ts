@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { syncVersionReferences } from "../../scripts/release";
@@ -84,5 +84,46 @@ describe("release script & package.json scripts", () => {
     writeFileSync(join(tempRoot, "src/index.ts"), "export const OTHER = 1;\n", "utf-8");
 
     expect(() => syncVersionReferences(tempRoot, "9.9.9")).toThrow(/FEEDBACK_WIDGET_VERSION/);
+  });
+});
+
+describe("BC-014 jsdelivr release", () => {
+  const rootDir = resolve(import.meta.dir, "../..");
+  const releaseWorkflowPath = resolve(rootDir, ".github", "workflows", "release.yml");
+  const readmePath = resolve(rootDir, "README.md");
+  const changelogPath = resolve(rootDir, "CHANGELOG.md");
+
+  test("given_release_workflow_when_read_then_triggers_on_v_tags", () => {
+    expect(existsSync(releaseWorkflowPath)).toBe(true);
+
+    const workflow = readFileSync(releaseWorkflowPath, "utf-8");
+
+    expect(workflow).toMatch(/tags:/);
+    expect(workflow).toMatch(/v\*/);
+  });
+
+  test("given_release_workflow_when_read_then_builds_and_publishes_bundle", () => {
+    const workflow = readFileSync(releaseWorkflowPath, "utf-8");
+
+    expect(workflow).toMatch(/bun install/);
+    expect(workflow).toMatch(/bun test/);
+    expect(workflow).toMatch(/bun run build/);
+    expect(workflow).toMatch(/dist\/feedback\.min\.js/);
+  });
+
+  test("given_readme_when_read_then_documents_jsdelivr_url_and_defer", () => {
+    const readme = readFileSync(readmePath, "utf-8");
+
+    expect(readme).toMatch(/cdn\.jsdelivr\.net\/gh\/lgzarturo\/feedback_widget@/);
+    expect(readme).toMatch(/script defer/);
+    expect(readme).toMatch(/data-feedback/);
+  });
+
+  test("given_changelog_when_read_then_has_1_0_0_with_update_instructions", () => {
+    const changelog = readFileSync(changelogPath, "utf-8");
+
+    expect(changelog).toMatch(/## \[1\.0\.0\]/);
+    expect(changelog).toMatch(/actualizar|Actualizar/i);
+    expect(changelog).toMatch(/v1\.0\.0/);
   });
 });

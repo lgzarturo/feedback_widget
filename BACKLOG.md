@@ -17,10 +17,16 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
+<!-- Mover items completados aqui con Status DONE y Progress 100 por ciento -->
+
+---
+
+## Archive
+
 ### BC-014 | Publicacion jsDelivr via GitHub Releases
 
 - Priority: P2
-- Status: TODO
+- Status: DONE
 - Type: feature
 - Owner: implementer
 - Depends on: BC-011, BC-012, BC-013
@@ -29,41 +35,39 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 - Out of scope: publicacion en npm registry, CDN alternativos, versionado automatico desde commits
 - Business value: distribucion gratuita y global del widget sin infraestructura propia de CDN
 - Acceptance:
-  - [ ] Push de tag v* dispara workflow que adjunta dist/feedback.min.js al GitHub Release
-  - [ ] README documenta URL https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js
-  - [ ] README incluye ejemplo HTML minimo con script defer y div data-feedback
-  - [ ] CHANGELOG.md registra la primera version publicada con instrucciones de actualizacion
-  - [ ] Verificacion manual documentada: cargar URL jsDelivr en playground y confirmar widget funcional
+  - [x] Push de tag v* dispara workflow que adjunta dist/feedback.min.js al GitHub Release
+  - [x] README documenta URL https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js
+  - [x] README incluye ejemplo HTML minimo con script defer y div data-feedback
+  - [x] CHANGELOG.md registra la primera version publicada con instrucciones de actualizacion
+  - [x] Verificacion manual documentada: cargar URL jsDelivr en playground y confirmar widget funcional
 - Risks: usuario de GitHub incorrecto en URL; parametrizar con variable en README
-- Progress: 0%
+- Progress: 100%
 - Reviewer: reviewer
-- Last update: 2026-08-10
+- Last update: 2026-08-11
 
 #### Scorecard BC-014
 
 Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
 Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
 
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos de release y documentacion listados en proposal.md                     | 10 %  | pendiente |
-| discover  | Convenciones de versionado semver documentadas                                  | 5 %   | pendiente |
-| design    | Flujo de release y URL jsDelivr definidos en design.md antes de implementar     | 15 %  | pendiente |
-| design    | Plantilla de ejemplo HTML de integracion explicita en design.md                   | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar implementacion                  | 5 %   | pendiente |
-| test      | Test de smoke verifica sintaxis valida del workflow release.yml                 | 15 %  | pendiente |
-| test      | Test verifica que README contiene patron de URL jsDelivr y ejemplo defer        | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Workflow release.yml funcional con artifact dist/feedback.min.js                | 10 %  | pendiente |
-| implement | Tag v0.1.0 de prueba genera release con bundle adjunto                          | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos de release y documentacion listados en proposal.md                     | 10 %  | completado  |
+| discover  | Convenciones de versionado semver documentadas                                  | 5 %   | completado  |
+| design    | Flujo de release y URL jsDelivr definidos en design.md antes de implementar     | 15 %  | completado  |
+| design    | Plantilla de ejemplo HTML de integracion explicita en design.md                   | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar implementacion                  | 5 %   | completado  |
+| test      | Test de smoke verifica sintaxis valida del workflow release.yml                 | 15 %  | completado  |
+| test      | Test verifica que README contiene patron de URL jsDelivr y ejemplo defer        | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Workflow release.yml funcional con artifact dist/feedback.min.js                | 10 %  | completado  |
+| implement | Tag v1.0.0 genera release con bundle adjunto                                    | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
 
-OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
+OpenSpec folder: openspec/changes/bc-014-publicacion-jsdelivr-via-github-releases/
 
 ---
-
-## Archive
 
 ### BC-013 | Suite de pruebas unitarias e integracion
 
