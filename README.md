@@ -78,6 +78,26 @@ bun install
 | `bun run lint` | Ejecuta el linter Biome en todo el proyecto. |
 | `bun run lint:fix` | Corrige automágicamente errores de formato y estilo con Biome. |
 | `bun run validate` | Valida el cumplimiento del estándar OpenSpec en el proyecto. |
+| `bun run build` | Genera el bundle CDN `dist/feedback.min.js`. |
+| `bun run playground` | Construye el bundle y sirve el playground local en `http://localhost:3456`. |
+
+### Playground local
+
+Entorno de demostración para probar el widget con controles en vivo (posición y colores) sin recargar la página.
+
+```bash
+bun run playground
+```
+
+Abre [http://localhost:3456](http://localhost:3456) en el navegador. El script ejecuta `bun run build` automáticamente antes de iniciar el servidor.
+
+**Controles disponibles:**
+
+- **Posición** — cambia `data-position` entre las cuatro esquinas
+- **Color primario** — actualiza `data-primary-color` del botón flotante
+- **Color acento** — actualiza `data-accent-color` de los botones de envío
+
+Para pruebas con API real, copia `.env.example` a `.env` y configura `PLAYGROUND_API_KEY`. El HTML del playground usa un placeholder; no uses claves de producción en demos públicas.
 
 ---
 

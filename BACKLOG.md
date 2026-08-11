@@ -17,52 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-012 | Playground de pruebas
-
-- Priority: P1
-- Status: READY
-- Type: feature
-- Owner: implementer
-- Depends on: BC-011
-- Description: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.
-- Scope: playground/index.html, playground/controls.js, package.json script playground
-- Out of scope: despliegue del playground a produccion, autenticacion, persistencia de configuracion
-- Business value: entorno de demostracion y validacion manual para desarrolladores integradores
-- Acceptance:
-  - [ ] bun run playground sirve playground/index.html en localhost con el widget cargado
-  - [ ] Controles permiten cambiar data-position entre las cuatro esquinas en vivo
-  - [ ] Controles permiten cambiar data-primary-color y data-accent-color en vivo
-  - [ ] La pagina demuestra ambos tabs Feedback y Contacto del modal
-  - [ ] README documenta como ejecutar el playground localmente
-- Risks: API key de prueba expuesta en playground; usar placeholder y .env.example
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-012
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos del playground listados en proposal.md                                 | 10 %  | pendiente |
-| discover  | Convenciones de servidor local y scripts documentadas                           | 5 %   | pendiente |
-| design    | Layout del playground y controles definidos en design.md antes de implementar   | 15 %  | pendiente |
-| design    | Lista de atributos configurables en vivo explicita en design.md                 | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar implementacion                  | 5 %   | pendiente |
-| test      | Test de smoke verifica que bun run playground inicia sin error                    | 15 %  | pendiente |
-| test      | Test verifica existencia de controles para posicion y colores en playground     | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | Playground funcional con widget cargado desde dist/feedback.min.js              | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-012-playground/
-
----
-
 ### BC-013 | Suite de pruebas unitarias e integracion
 
 - Priority: P1
@@ -157,6 +111,52 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 ---
 
 ## Archive
+
+### BC-012 | Playground de pruebas
+
+- Priority: P1
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-011
+- Description: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.
+- Scope: playground/index.html, playground/controls.js, package.json script playground
+- Out of scope: despliegue del playground a produccion, autenticacion, persistencia de configuracion
+- Business value: entorno de demostracion y validacion manual para desarrolladores integradores
+- Acceptance:
+  - [x] bun run playground sirve playground/index.html en localhost con el widget cargado
+  - [x] Controles permiten cambiar data-position entre las cuatro esquinas en vivo
+  - [x] Controles permiten cambiar data-primary-color y data-accent-color en vivo
+  - [x] La pagina demuestra ambos tabs Feedback y Contacto del modal
+  - [x] README documenta como ejecutar el playground localmente
+- Risks: API key de prueba expuesta en playground; usar placeholder y .env.example
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-012
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos del playground listados en proposal.md                                 | 10 %  | completado  |
+| discover  | Convenciones de servidor local y scripts documentadas                           | 5 %   | completado  |
+| design    | Layout del playground y controles definidos en design.md antes de implementar   | 15 %  | completado  |
+| design    | Lista de atributos configurables en vivo explicita en design.md                 | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar implementacion                  | 5 %   | completado  |
+| test      | Test de smoke verifica que bun run playground inicia sin error                    | 15 %  | completado  |
+| test      | Test verifica existencia de controles para posicion y colores en playground     | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | Playground funcional con widget cargado desde dist/feedback.min.js              | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-012-playground-de-pruebas/
+
+---
 
 ### BC-011 | Build bundle unico feedback.min.js
 

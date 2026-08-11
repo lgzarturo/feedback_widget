@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-011",
+  "activeItemId": "BC-012",
   "taskCards": [
     {
-      "id": "BC-011-discover",
-      "backlogId": "BC-011",
+      "id": "BC-012-discover",
+      "backlogId": "BC-012",
       "phase": "discover",
-      "title": "BC-011: Discover scope and impact",
-      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-012: Discover scope and impact",
+      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-011-design",
-      "backlogId": "BC-011",
+      "id": "BC-012-design",
+      "backlogId": "BC-012",
       "phase": "design",
-      "title": "BC-011: Technical design",
-      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-012: Technical design",
+      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-011-discover"
+        "BC-012-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,55 +33,55 @@
       "status": "pending"
     },
     {
-      "id": "BC-011-test",
-      "backlogId": "BC-011",
+      "id": "BC-012-test",
+      "backlogId": "BC-012",
       "phase": "test",
-      "title": "BC-011: Test coverage",
-      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-012: Test coverage",
+      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-011-design"
+        "BC-012-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: bun run build genera dist/feedback.min.js como archivo unico IIFE",
-        "Test covers: El bundle incluye Three.js empaquetado sin requerir script adicional en el host",
-        "Test covers: El archivo minificado pesa menos de 200 KB gzip segun comando de verificacion documentado",
-        "Test covers: El script funciona cargado con atributo defer sin modulos ES en el host",
-        "Test covers: No existen imports a URLs externas en el bundle final"
+        "Test covers: bun run playground sirve playground/index.html en localhost con el widget cargado",
+        "Test covers: Controles permiten cambiar data-position entre las cuatro esquinas en vivo",
+        "Test covers: Controles permiten cambiar data-primary-color y data-accent-color en vivo",
+        "Test covers: La pagina demuestra ambos tabs Feedback y Contacto del modal",
+        "Test covers: README documenta como ejecutar el playground localmente"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-011-implement",
-      "backlogId": "BC-011",
+      "id": "BC-012-implement",
+      "backlogId": "BC-012",
       "phase": "implement",
-      "title": "BC-011: Implementation",
-      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-012: Implementation",
+      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-011-test"
+        "BC-012-test"
       ],
       "acceptanceCriteria": [
-        "bun run build genera dist/feedback.min.js como archivo unico IIFE",
-        "El bundle incluye Three.js empaquetado sin requerir script adicional en el host",
-        "El archivo minificado pesa menos de 200 KB gzip segun comando de verificacion documentado",
-        "El script funciona cargado con atributo defer sin modulos ES en el host",
-        "No existen imports a URLs externas en el bundle final"
+        "bun run playground sirve playground/index.html en localhost con el widget cargado",
+        "Controles permiten cambiar data-position entre las cuatro esquinas en vivo",
+        "Controles permiten cambiar data-primary-color y data-accent-color en vivo",
+        "La pagina demuestra ambos tabs Feedback y Contacto del modal",
+        "README documenta como ejecutar el playground localmente"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-011-review",
-      "backlogId": "BC-011",
+      "id": "BC-012-review",
+      "backlogId": "BC-012",
       "phase": "review",
-      "title": "BC-011: Review and validation",
-      "prompt": "Backlog item BC-011 — Build bundle unico feedback.min.js\n\nDescription: Configurar el pipeline de build que produce un unico archivo feedback.min.js autocontenido, minificado y listo para CDN sin dependencias runtime externas en el sitio host.\nScope: build.ts, package.json scripts, dist/feedback.min.js, dist/feedback.min.js.map\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-012: Review and validation",
+      "prompt": "Backlog item BC-012 — Playground de pruebas\n\nDescription: Crear una pagina playground local para probar el widget con controles en vivo que modifican atributos data-feedback sin recargar la pagina.\nScope: playground/index.html, playground/controls.js, package.json script playground\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-011-implement"
+        "BC-012-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -102,7 +102,8 @@
     "BC-008": "openspec/changes/bc-008-formulario-de-contacto-y-envio-solo-contacto",
     "BC-009": "openspec/changes/bc-009-microanimaciones-three-js",
     "BC-010": "openspec/changes/bc-010-cliente-api-api-appsutiles-dev",
-    "BC-011": "openspec/changes/bc-011-build-bundle-unico-feedback-min-js"
+    "BC-011": "openspec/changes/bc-011-build-bundle-unico-feedback-min-js",
+    "BC-012": "openspec/changes/bc-012-playground-de-pruebas"
   },
   "itemSnapshots": {}
 }

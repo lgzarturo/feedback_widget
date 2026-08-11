@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback Widget — Playground</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #f1f5f9;
+        color: #0f172a;
+        min-height: 100vh;
+      }
+
+      .pg-header {
+        padding: 1.5rem 2rem;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .pg-header h1 {
+        margin: 0 0 0.25rem;
+        font-size: 1.5rem;
+      }
+
+      .pg-header p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.95rem;
+      }
+
+      .pg-layout {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 0;
+        min-height: calc(100vh - 88px);
+      }
+
+      .pg-controls {
+        padding: 1.5rem;
+        background: #ffffff;
+        border-right: 1px solid #e2e8f0;
+      }
+
+      .pg-controls h2 {
+        margin: 0 0 1rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+      }
+
+      .pg-field {
+        margin-bottom: 1.25rem;
+      }
+
+      .pg-field label {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .pg-field select,
+      .pg-field input[type="color"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        background: #ffffff;
+      }
+
+      .pg-field input[type="color"] {
+        height: 40px;
+        padding: 4px;
+        cursor: pointer;
+      }
+
+      .pg-demo {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      .pg-demo h3 {
+        margin: 0 0 0.75rem;
+        font-size: 0.95rem;
+      }
+
+      .pg-demo ol {
+        margin: 0;
+        padding-left: 1.25rem;
+        font-size: 0.875rem;
+        color: #475569;
+        line-height: 1.6;
+      }
+
+      .pg-preview {
+        padding: 2rem;
+        position: relative;
+        min-height: 400px;
+      }
+
+      .pg-preview-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 2rem;
+        min-height: 360px;
+      }
+
+      .pg-preview-card h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.25rem;
+      }
+
+      .pg-preview-card p {
+        margin: 0;
+        color: #64748b;
+      }
+
+      .pg-attrs {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        font-family: ui-monospace, monospace;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="pg-header">
+      <h1>Feedback Widget — Playground</h1>
+      <p>Prueba el widget con controles en vivo. Los cambios actualizan los atributos data-feedback sin recargar.</p>
+    </header>
+
+    <div class="pg-layout">
+      <aside class="pg-controls">
+        <h2>Controles</h2>
+
+        <div class="pg-field">
+          <label for="ctrl-position">Posición (data-position)</label>
+          <select id="ctrl-position">
+            <option value="bottom-right">bottom-right</option>
+            <option value="bottom-left">bottom-left</option>
+            <option value="top-right">top-right</option>
+            <option value="top-left">top-left</option>
+          </select>
+        </div>
+
+        <div class="pg-field">
+          <label for="ctrl-primary-color">Color primario (data-primary-color)</label>
+          <input type="color" id="ctrl-primary-color" value="#2563eb" />
+        </div>
+
+        <div class="pg-field">
+          <label for="ctrl-accent-color">Color acento (data-accent-color)</label>
+          <input type="color" id="ctrl-accent-color" value="#1d4ed8" />
+        </div>
+
+        <div class="pg-demo">
+          <h3>Demostración del modal</h3>
+          <ol>
+            <li>Haz clic en el botón flotante del widget.</li>
+            <li>Explora la pestaña <strong>Feedback</strong> con emojis de satisfacción.</li>
+            <li>Cambia a la pestaña <strong>Contacto</strong> para el formulario de mensaje.</li>
+          </ol>
+        </div>
+      </aside>
+
+      <main class="pg-preview">
+        <div class="pg-preview-card">
+          <h2>Vista previa</h2>
+          <p>El widget aparece como botón flotante sobre esta área. Usa los controles para cambiar posición y colores.</p>
+          <div class="pg-attrs" id="attrs-display" aria-live="polite"></div>
+        </div>
+      </main>
+    </div>
+
+    <div
+      id="widget-host"
+      data-feedback
+      data-api-key="pk_test_placeholder"
+      data-position="bottom-right"
+      data-primary-color="#2563eb"
+      data-accent-color="#1d4ed8"
+      data-source="playground"
+    ></div>
+
+    <script defer src="/dist/feedback.min.js"></script>
+    <script defer src="/controls.js"></script>
+  </body>
+</html>
