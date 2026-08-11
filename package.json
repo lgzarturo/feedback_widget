@@ -1,0 +1,25 @@
+{
+  "name": "feedback-widget",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "validate": "npx cc-codeconductor openspec validate"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@happy-dom/global-registrator": "^20.11.1",
+    "@types/bun": "latest",
+    "happy-dom": "^20.11.1",
+    "typescript": "^5.7.3"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ]
+}

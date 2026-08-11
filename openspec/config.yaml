@@ -1,0 +1,4 @@
+# OpenSpec project config (CodeConductor native compatible)
+schema: spec-driven
+testing:
+  test_runner: bun
