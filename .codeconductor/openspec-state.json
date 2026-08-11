@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-001",
+  "activeItemId": "BC-002",
   "taskCards": [
     {
-      "id": "BC-001-discover",
-      "backlogId": "BC-001",
+      "id": "BC-002-discover",
+      "backlogId": "BC-002",
       "phase": "discover",
-      "title": "BC-001: Discover scope and impact",
-      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-002: Discover scope and impact",
+      "prompt": "Backlog item BC-002 — Toolchain de calidad Biome bun test CI y openspec config\n\nDescription: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.\nScope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-001-design",
-      "backlogId": "BC-001",
+      "id": "BC-002-design",
+      "backlogId": "BC-002",
       "phase": "design",
-      "title": "BC-001: Technical design",
-      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-002: Technical design",
+      "prompt": "Backlog item BC-002 — Toolchain de calidad Biome bun test CI y openspec config\n\nDescription: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.\nScope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-001-discover"
+        "BC-002-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,53 +33,53 @@
       "status": "pending"
     },
     {
-      "id": "BC-001-test",
-      "backlogId": "BC-001",
+      "id": "BC-002-test",
+      "backlogId": "BC-002",
       "phase": "test",
-      "title": "BC-001: Test coverage",
-      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-002: Test coverage",
+      "prompt": "Backlog item BC-002 — Toolchain de calidad Biome bun test CI y openspec config\n\nDescription: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.\nScope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-001-design"
+        "BC-002-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: bun install && bun run typecheck ejecuta sin errores en un clon limpio",
-        "Test covers: tsconfig.json tiene strict true con target y module ESNext",
-        "Test covers: Existen las carpetas src/config, src/ui, src/api y src/animations con src/index.ts compilando",
-        "Test covers: .gitignore excluye node_modules, dist y archivos de entorno local"
+        "Test covers: bun test ejecuta al menos un smoke test en verde",
+        "Test covers: openspec/config.yaml declara test_runner bun en la seccion testing",
+        "Test covers: El workflow de CI corre install, typecheck, lint y test en push a main",
+        "Test covers: bun run lint ejecuta Biome sin errores en el codigo base"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-001-implement",
-      "backlogId": "BC-001",
+      "id": "BC-002-implement",
+      "backlogId": "BC-002",
       "phase": "implement",
-      "title": "BC-001: Implementation",
-      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-002: Implementation",
+      "prompt": "Backlog item BC-002 — Toolchain de calidad Biome bun test CI y openspec config\n\nDescription: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.\nScope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-001-test"
+        "BC-002-test"
       ],
       "acceptanceCriteria": [
-        "bun install && bun run typecheck ejecuta sin errores en un clon limpio",
-        "tsconfig.json tiene strict true con target y module ESNext",
-        "Existen las carpetas src/config, src/ui, src/api y src/animations con src/index.ts compilando",
-        ".gitignore excluye node_modules, dist y archivos de entorno local"
+        "bun test ejecuta al menos un smoke test en verde",
+        "openspec/config.yaml declara test_runner bun en la seccion testing",
+        "El workflow de CI corre install, typecheck, lint y test en push a main",
+        "bun run lint ejecuta Biome sin errores en el codigo base"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-001-review",
-      "backlogId": "BC-001",
+      "id": "BC-002-review",
+      "backlogId": "BC-002",
       "phase": "review",
-      "title": "BC-001: Review and validation",
-      "prompt": "Backlog item BC-001 — Scaffolding Bun + TypeScript strict\n\nDescription: Inicializar el proyecto ejecutable con Bun, TypeScript strict y la estructura de carpetas base del widget CDN.\nScope: package.json, tsconfig.json, src/index.ts, carpetas src/config, src/ui, src/api, src/animations, .gitignore\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-002: Review and validation",
+      "prompt": "Backlog item BC-002 — Toolchain de calidad Biome bun test CI y openspec config\n\nDescription: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.\nScope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-001-implement"
+        "BC-002-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -90,7 +90,8 @@
     }
   ],
   "changePaths": {
-    "BC-001": "openspec/changes/bc-001-scaffolding-bun-typescript-strict"
+    "BC-001": "openspec/changes/bc-001-scaffolding-bun-typescript-strict",
+    "BC-002": "openspec/changes/bc-002-toolchain-de-calidad-biome-bun-test-ci-y-openspe"
   },
   "itemSnapshots": {}
 }

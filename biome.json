@@ -25,7 +25,8 @@
       ".cursor",
       ".claude",
       ".agents",
-      "openspec"
+      "openspec",
+      ".codebase-memory"
     ]
   }
 }

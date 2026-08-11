@@ -17,51 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-002 | Toolchain de calidad Biome bun test CI y openspec config
-
-- Priority: P0
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-001
-- Description: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.
-- Scope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts
-- Out of scope: tests de logica de negocio del widget, reglas de lint personalizadas mas alla del preset recomendado
-- Business value: gate automatico de calidad para todas las fases siguientes
-- Acceptance:
-  - [ ] bun test ejecuta al menos un smoke test en verde
-  - [ ] openspec/config.yaml declara test_runner bun en la seccion testing
-  - [ ] El workflow de CI corre install, typecheck, lint y test en push a main
-  - [ ] bun run lint ejecuta Biome sin errores en el codigo base
-- Risks: ninguno relevante
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-002
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos de toolchain listados en proposal.md                                   | 10 %  | pendiente |
-| discover  | Convenciones de lint y CI documentadas                                          | 5 %   | pendiente |
-| design    | Configuracion de Biome y CI definida en design.md antes de tests                | 15 %  | pendiente |
-| design    | Estructura de openspec/config.yaml explicita en design.md                       | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Smoke test escrito y en rojo antes de implementar toolchain                     | 15 %  | pendiente |
-| test      | Test verifica que bun test descubre tests/smoke.test.ts                         | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test y bun run lint pasan en verde despues de implementar                 | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-002-toolchain-quality/
-
----
-
 ### BC-003 | Contrato de configuracion data-feedback
 
 - Priority: P0
@@ -659,5 +614,45 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 | review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
 
 OpenSpec folder: openspec/changes/bc-001-scaffolding-bun-typescript-strict/
+
+### BC-002 | Toolchain de calidad Biome bun test CI y openspec config
+
+- Priority: P0
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-001
+- Description: Configurar linter y formatter Biome, definir bun test como runner oficial y montar GitHub Actions con typecheck, lint y tests.
+- Scope: biome.json, .github/workflows/ci.yml, openspec/config.yaml, tests/smoke.test.ts
+- Out of scope: tests de logica de negocio del widget, reglas de lint personalizadas mas alla del preset recomendado
+- Business value: gate automatico de calidad para todas las fases siguientes
+- Acceptance:
+  - [x] bun test ejecuta al menos un smoke test en verde
+  - [x] openspec/config.yaml declara test_runner bun en la seccion testing
+  - [x] El workflow de CI corre install, typecheck, lint y test en push a main
+  - [x] bun run lint ejecuta Biome sin errores en el codigo base
+- Risks: ninguno relevante
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-002
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos de toolchain listados en proposal.md                                   | 10 %  | completado  |
+| discover  | Convenciones de lint y CI documentadas                                          | 5 %   | completado  |
+| design    | Configuracion de Biome y CI definida en design.md antes de tests                | 15 %  | completado  |
+| design    | Estructura de openspec/config.yaml explicita en design.md                       | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Smoke test escrito y en rojo antes de implementar toolchain                     | 15 %  | completado  |
+| test      | Test verifica que bun test descubre tests/smoke.test.ts                         | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test y bun run lint pasan en verde despues de implementar                 | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-002-toolchain-de-calidad-biome-bun-test-ci-y-openspe/
 
 <!-- Mover items completados aqui con Status DONE y Progress 100 por ciento -->
