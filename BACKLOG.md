@@ -20,7 +20,7 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 ### BC-007 | Formulario de feedback con emojis
 
 - Priority: P1
-- Status: TODO
+- Status: DONE
 - Type: feature
 - Owner: implementer
 - Depends on: BC-006
@@ -29,13 +29,13 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 - Out of scope: cliente API HTTP, animaciones Three.js, tab de contacto
 - Business value: captura de satisfaccion con minima friccion para el usuario final
 - Acceptance:
-  - [ ] El formulario muestra cinco emojis seleccionables representando niveles de satisfaccion
-  - [ ] El usuario puede enviar seleccionando solo un emoji sin escribir comentario
-  - [ ] El payload preparado incluye metadata con rating numerico, ratingEmoji y formType feedback
-  - [ ] Validacion inline impide envio sin emoji seleccionado mostrando mensaje de error
-  - [ ] Tests verifican seleccion de emoji, envio minimo y rechazo sin seleccion
+  - [x] El formulario muestra cinco emojis seleccionables representando niveles de satisfaccion
+  - [x] El usuario puede enviar seleccionando solo un emoji sin escribir comentario
+  - [x] El payload preparado incluye metadata con rating numerico, ratingEmoji y formType feedback
+  - [x] Validacion inline impide envio sin emoji seleccionado mostrando mensaje de error
+  - [x] Tests verifican seleccion de emoji, envio minimo y rechazo sin seleccion
 - Risks: interpretacion subjetiva de emojis entre culturas; mitigar con data-locale
-- Progress: 0%
+- Progress: 100%
 - Reviewer: reviewer
 - Last update: 2026-08-10
 
@@ -44,22 +44,22 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
 Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
 
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos del formulario feedback listados en proposal.md                        | 10 %  | pendiente |
-| discover  | Convenciones de metadata de satisfaccion documentadas                            | 5 %   | pendiente |
-| design    | Escala de emojis y estructura metadata definidas en design.md antes de tests    | 15 %  | pendiente |
-| design    | Reglas de validacion de envio minimo explicitas en design.md                    | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de feedback-form escritos y en rojo antes de implementar                  | 15 %  | pendiente |
-| test      | Tests cubren envio solo-emoji, comentario opcional y error sin seleccion        | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/ui/feedback-form.test.ts pasa en verde                           | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos del formulario feedback listados en proposal.md                        | 10 %  | completado  |
+| discover  | Convenciones de metadata de satisfaccion documentadas                            | 5 %   | completado  |
+| design    | Escala de emojis y estructura metadata definidas en design.md antes de tests    | 15 %  | completado  |
+| design    | Reglas de validacion de envio minimo explicitas en design.md                    | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Tests de feedback-form escritos y en rojo antes de implementar                  | 15 %  | completado  |
+| test      | Tests cubren envio solo-emoji, comentario opcional y error sin seleccion        | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/ui/feedback-form.test.ts pasa en verde                           | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
 
-OpenSpec folder: openspec/changes/bc-007-feedback-emoji-form/
+OpenSpec folder: openspec/changes/bc-007-formulario-de-feedback-con-emojis/
 
 ---
 
