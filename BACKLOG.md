@@ -17,52 +17,6 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Items
 
-### BC-006 | Modal con tabs feedback y contacto
-
-- Priority: P1
-- Status: TODO
-- Type: feature
-- Owner: implementer
-- Depends on: BC-005
-- Description: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.
-- Scope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts
-- Out of scope: logica de envio de formularios, animaciones Three.js, cliente API
-- Business value: estructura de UI que separa evaluacion de experiencia y contacto directo
-- Acceptance:
-  - [ ] Clic en el boton flotante abre el modal; clic en cerrar o tecla Escape lo cierra
-  - [ ] Existen dos tabs visibles: Feedback y Contacto
-  - [ ] Las tabs son navegables con flechas izquierda y derecha y activables con Enter
-  - [ ] El modal implementa focus trap basico mientras esta abierto
-  - [ ] Tests verifican apertura, cierre y cambio de tab activa
-- Risks: conflictos de z-index con modales del sitio host
-- Progress: 0%
-- Reviewer: reviewer
-- Last update: 2026-08-10
-
-#### Scorecard BC-006
-
-Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
-Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
-
-| Fase      | Criterio                                                                        | Peso  | Estado   |
-|-----------|---------------------------------------------------------------------------------|-------|----------|
-| discover  | Archivos modal y tabs listados en proposal.md                                   | 10 %  | pendiente |
-| discover  | Convenciones de componentes UI y eventos documentadas                           | 5 %   | pendiente |
-| design    | Estructura DOM del modal y semantica de tabs definida en design.md              | 15 %  | pendiente |
-| design    | Comportamiento de focus trap y teclas documentado en design.md                   | 10 %  | pendiente |
-| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | pendiente |
-| test      | Tests de modal y tabs escritos y en rojo antes de implementar                   | 15 %  | pendiente |
-| test      | Tests cubren apertura, cierre Escape y navegacion por teclado entre tabs        | 10 %  | pendiente |
-| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | pendiente |
-| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | pendiente |
-| implement | bun test tests/ui/modal.test.ts y tests/ui/tabs.test.ts pasan en verde          | 10 %  | pendiente |
-| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | pendiente |
-| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | pendiente |
-
-OpenSpec folder: openspec/changes/bc-006-modal-tabs/
-
----
-
 ### BC-007 | Formulario de feedback con emojis
 
 - Priority: P1
@@ -437,6 +391,50 @@ OpenSpec folder: openspec/changes/bc-014-jsdelivr-release/
 ---
 
 ## Archive
+
+### BC-006 | Modal con tabs feedback y contacto
+
+- Priority: P1
+- Status: DONE
+- Type: feature
+- Owner: implementer
+- Depends on: BC-005
+- Description: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.
+- Scope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts
+- Out of scope: logica de envio de formularios, animaciones Three.js, cliente API
+- Business value: estructura de UI que separa evaluacion de experiencia y contacto directo
+- Acceptance:
+  - [x] Clic en el boton flotante abre el modal; clic en cerrar o tecla Escape lo cierra
+  - [x] Existen dos tabs visibles: Feedback y Contacto
+  - [x] Las tabs son navegables con flechas izquierda y derecha y activables con Enter
+  - [x] El modal implementa focus trap basico mientras esta abierto
+  - [x] Tests verifican apertura, cierre y cambio de tab activa
+- Risks: conflictos de z-index con modales del sitio host
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-10
+
+#### Scorecard BC-006
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Archivos modal y tabs listados en proposal.md                                   | 10 %  | completado  |
+| discover  | Convenciones de componentes UI y eventos documentadas                           | 5 %   | completado  |
+| design    | Estructura DOM del modal y semantica de tabs definida en design.md              | 15 %  | completado  |
+| design    | Comportamiento de focus trap y teclas documentado en design.md                   | 10 %  | completado  |
+| design    | design.md aprobado por revisor antes de comenzar fase test                      | 5 %   | completado  |
+| test      | Tests de modal y tabs escritos y en rojo antes de implementar                   | 15 %  | completado  |
+| test      | Tests cubren apertura, cierre Escape y navegacion por teclado entre tabs        | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Implementacion minimal sin codigo fuera del plan de diseno                      | 10 %  | completado  |
+| implement | bun test tests/ui/modal.test.ts y tests/ui/tabs.test.ts pasan en verde          | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-006-modal-con-tabs-feedback-y-contacto/
 
 ### BC-005 | Boton flotante configurable
 

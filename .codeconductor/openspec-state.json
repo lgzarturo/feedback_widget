@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "activeItemId": "BC-005",
+  "activeItemId": "BC-006",
   "taskCards": [
     {
-      "id": "BC-005-discover",
-      "backlogId": "BC-005",
+      "id": "BC-006-discover",
+      "backlogId": "BC-006",
       "phase": "discover",
-      "title": "BC-005: Discover scope and impact",
-      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
+      "title": "BC-006: Discover scope and impact",
+      "prompt": "Backlog item BC-006 — Modal con tabs feedback y contacto\n\nDescription: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.\nScope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts\n\nMap repository structure, conventions, and impact radius for this change.",
       "agent": "repo-explorer",
       "modelHint": "repo-explorer",
       "dependsOn": [],
@@ -17,15 +17,15 @@
       "status": "pending"
     },
     {
-      "id": "BC-005-design",
-      "backlogId": "BC-005",
+      "id": "BC-006-design",
+      "backlogId": "BC-006",
       "phase": "design",
-      "title": "BC-005: Technical design",
-      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
+      "title": "BC-006: Technical design",
+      "prompt": "Backlog item BC-006 — Modal con tabs feedback y contacto\n\nDescription: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.\nScope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts\n\nProduce a Technical Plan with approach, files affected, risks, and edge cases.",
       "agent": "architect",
       "modelHint": "architect",
       "dependsOn": [
-        "BC-005-discover"
+        "BC-006-discover"
       ],
       "acceptanceCriteria": [
         "Technical plan lists files affected and approach"
@@ -33,55 +33,55 @@
       "status": "pending"
     },
     {
-      "id": "BC-005-test",
-      "backlogId": "BC-005",
+      "id": "BC-006-test",
+      "backlogId": "BC-006",
       "phase": "test",
-      "title": "BC-005: Test coverage",
-      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
+      "title": "BC-006: Test coverage",
+      "prompt": "Backlog item BC-006 — Modal con tabs feedback y contacto\n\nDescription: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.\nScope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts\n\nWrite TDD tests covering acceptance criteria before or after implementation per project policy.",
       "agent": "tester",
       "modelHint": "tester",
       "dependsOn": [
-        "BC-005-design"
+        "BC-006-design"
       ],
       "acceptanceCriteria": [
-        "Test covers: El boton se renderiza en bottom-left, bottom-right, top-left o top-right segun data-position",
-        "Test covers: El color de fondo del boton respeta data-primary-color de la configuracion",
-        "Test covers: Los estilos estan encapsulados y no contaminan estilos globales del sitio host",
-        "Test covers: El boton es accesible con aria-label y responde a Enter y Space",
-        "Test covers: Tests verifican posicionamiento y aplicacion de color primario"
+        "Test covers: Clic en el boton flotante abre el modal; clic en cerrar o tecla Escape lo cierra",
+        "Test covers: Existen dos tabs visibles: Feedback y Contacto",
+        "Test covers: Las tabs son navegables con flechas izquierda y derecha y activables con Enter",
+        "Test covers: El modal implementa focus trap basico mientras esta abierto",
+        "Test covers: Tests verifican apertura, cierre y cambio de tab activa"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-005-implement",
-      "backlogId": "BC-005",
+      "id": "BC-006-implement",
+      "backlogId": "BC-006",
       "phase": "implement",
-      "title": "BC-005: Implementation",
-      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
+      "title": "BC-006: Implementation",
+      "prompt": "Backlog item BC-006 — Modal con tabs feedback y contacto\n\nDescription: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.\nScope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts\n\nImplement the minimal diff to satisfy tests and acceptance criteria.",
       "agent": "implementer",
       "modelHint": "implementer",
       "dependsOn": [
-        "BC-005-test"
+        "BC-006-test"
       ],
       "acceptanceCriteria": [
-        "El boton se renderiza en bottom-left, bottom-right, top-left o top-right segun data-position",
-        "El color de fondo del boton respeta data-primary-color de la configuracion",
-        "Los estilos estan encapsulados y no contaminan estilos globales del sitio host",
-        "El boton es accesible con aria-label y responde a Enter y Space",
-        "Tests verifican posicionamiento y aplicacion de color primario"
+        "Clic en el boton flotante abre el modal; clic en cerrar o tecla Escape lo cierra",
+        "Existen dos tabs visibles: Feedback y Contacto",
+        "Las tabs son navegables con flechas izquierda y derecha y activables con Enter",
+        "El modal implementa focus trap basico mientras esta abierto",
+        "Tests verifican apertura, cierre y cambio de tab activa"
       ],
       "status": "pending"
     },
     {
-      "id": "BC-005-review",
-      "backlogId": "BC-005",
+      "id": "BC-006-review",
+      "backlogId": "BC-006",
       "phase": "review",
-      "title": "BC-005: Review and validation",
-      "prompt": "Backlog item BC-005 — Boton flotante configurable\n\nDescription: Implementar el boton flotante de activacion del widget con posicion configurable en las cuatro esquinas y estilos derivados de la configuracion data-feedback.\nScope: src/ui/trigger-button.ts, src/ui/styles.ts, tests/ui/trigger-button.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
+      "title": "BC-006: Review and validation",
+      "prompt": "Backlog item BC-006 — Modal con tabs feedback y contacto\n\nDescription: Implementar el contenedor modal que se abre al hacer clic en el boton flotante, con dos pestanas: Feedback y Contacto, navegables por teclado.\nScope: src/ui/modal.ts, src/ui/tabs.ts, tests/ui/modal.test.ts, tests/ui/tabs.test.ts\n\nVerify acceptance criteria, test coverage, scope alignment, and code quality.",
       "agent": "reviewer",
       "modelHint": "reviewer",
       "dependsOn": [
-        "BC-005-implement"
+        "BC-006-implement"
       ],
       "acceptanceCriteria": [
         "All acceptance criteria verified",
@@ -96,7 +96,8 @@
     "BC-002": "openspec/changes/bc-002-toolchain-de-calidad-biome-bun-test-ci-y-openspe",
     "BC-003": "openspec/changes/bc-003-contrato-de-configuracion-data-feedback",
     "BC-004": "openspec/changes/bc-004-bootstrap-del-widget-y-carga-diferida",
-    "BC-005": "openspec/changes/bc-005-boton-flotante-configurable"
+    "BC-005": "openspec/changes/bc-005-boton-flotante-configurable",
+    "BC-006": "openspec/changes/bc-006-modal-con-tabs-feedback-y-contacto"
   },
   "itemSnapshots": {}
 }
