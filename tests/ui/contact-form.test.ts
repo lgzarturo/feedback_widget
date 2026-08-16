@@ -263,4 +263,21 @@ describe("BC-008 createContactForm", () => {
     expect(getFieldError(form.root, "fw-contact-name").hidden).toBe(true);
     expect(nameInput.classList.contains("fw-field-input--error")).toBe(false);
   });
+
+  test("given_filled_form_when_reset_then_clears_fields_and_focuses_name", () => {
+    const form = mountForm();
+    fillValidForm(form.root);
+    getNameInput(form.root).dispatchEvent(new Event("blur", { bubbles: true }));
+    getMessageTextarea(form.root).value = "a".repeat(20);
+    getMessageTextarea(form.root).dispatchEvent(new Event("input", { bubbles: true }));
+
+    form.reset();
+
+    expect(getNameInput(form.root).value).toBe("");
+    expect(getEmailInput(form.root).value).toBe("");
+    expect(getMessageTextarea(form.root).value).toBe("");
+    expect(getCharCounter(form.root).textContent).toBe("0/1000");
+    expect(getFieldError(form.root, "fw-contact-name").hidden).toBe(true);
+    expect(document.activeElement).toBe(getNameInput(form.root));
+  });
 });

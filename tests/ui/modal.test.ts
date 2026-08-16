@@ -281,6 +281,8 @@ describe("BC-006 createFeedbackModal", () => {
     expect(fetchMock.captured).toHaveLength(1);
     expect(fetchMock.captured[0]?.url).toBe("https://api.test.dev/v1/contact/messages");
     const body = JSON.parse(String(fetchMock.captured[0]?.init.body));
+    expect(body.name).toBe("User Feedback");
+    expect(body.email).toBe("lgzarturo@gmail.com");
     expect(body.metadata).toEqual({
       formType: "feedback",
       rating: 4,
@@ -346,6 +348,11 @@ describe("BC-006 createFeedbackModal", () => {
       (el): el is HTMLButtonElement => el instanceof HTMLButtonElement,
     );
     emojiOptions[3]?.click();
+    const comment = feedbackPanel?.querySelector(".fw-comment");
+    if (comment instanceof HTMLTextAreaElement) {
+      comment.value = "Muy bueno";
+      comment.dispatchEvent(new Event("input", { bubbles: true }));
+    }
     const submitButton = feedbackPanel?.querySelector(".fw-submit");
     if (submitButton instanceof HTMLButtonElement) {
       submitButton.click();
@@ -359,7 +366,55 @@ describe("BC-006 createFeedbackModal", () => {
     expect(status?.textContent).toBe("¡Gracias por tu feedback!");
     expect((status as HTMLElement).hidden).toBe(false);
 
+    expect(emojiOptions.every((btn) => btn.getAttribute("aria-checked") === "false")).toBe(true);
+    expect(comment instanceof HTMLTextAreaElement && comment.value).toBe("");
+    expect(modal.host.shadowRoot?.activeElement).toBe(emojiOptions[0]);
+
     fetchMock.restore();
+  });
+
+  test("given_api_returns_400_with_error_message_when_feedback_submit_then_shows_extracted_message", async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = (async () =>
+      new Response(
+        JSON.stringify({
+          success: false,
+          error: {
+            name: "ZodError",
+            message: JSON.stringify([
+              {
+                path: ["name"],
+                message: "Too small: expected string to have >=1 characters",
+              },
+            ]),
+          },
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
+      )) as unknown as typeof fetch;
+
+    const modal = createFeedbackModal(configWith({ apiKey: "modal-test-key" }), {
+      withForms: true,
+    });
+    document.body.appendChild(modal.host);
+    modal.open();
+
+    const feedbackPanel = modal.host.shadowRoot?.querySelector("#fw-panel-feedback");
+    const emojiOptions = [...(feedbackPanel?.querySelectorAll(".fw-emoji-option") ?? [])].filter(
+      (el): el is HTMLButtonElement => el instanceof HTMLButtonElement,
+    );
+    emojiOptions[3]?.click();
+    const submitButton = feedbackPanel?.querySelector(".fw-submit");
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.click();
+    }
+
+    await flushMicrotasks();
+    await flushMicrotasks();
+
+    const status = modal.host.shadowRoot?.querySelector(".fw-status");
+    expect(status?.textContent).toBe("Too small: expected string to have >=1 characters");
+
+    globalThis.fetch = originalFetch;
   });
 
   test("given_contact_submitted_when_fetch_throws_then_shows_network_error", async () => {

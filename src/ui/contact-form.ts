@@ -12,6 +12,7 @@ export interface ContactFormController {
   root: HTMLElement;
   getPayload(): ContactFormPayload | null;
   submit(): boolean;
+  reset(): void;
 }
 
 type FieldName = "name" | "email" | "message";
@@ -293,6 +294,17 @@ export function createContactForm(
     return true;
   }
 
+  function reset(): void {
+    for (const fieldName of ["name", "email", "message"] as const) {
+      inputs[fieldName].value = "";
+      setFieldError(fieldName, null);
+    }
+    if (charCounter) {
+      updateCharCounter(charCounter, 0);
+    }
+    inputs.name.focus();
+  }
+
   for (const fieldName of ["name", "email", "message"] as const) {
     inputs[fieldName].addEventListener("blur", () => {
       validateField(fieldName);
@@ -316,5 +328,6 @@ export function createContactForm(
     root,
     getPayload: buildPayload,
     submit,
+    reset,
   };
 }

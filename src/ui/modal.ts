@@ -45,22 +45,32 @@ function mountForms(
     return;
   }
 
+  const formRefs: {
+    feedback?: ReturnType<typeof createFeedbackForm>;
+    contact?: ReturnType<typeof createContactForm>;
+  } = {};
+
   const submitHandler = (payload: ContactFormPayload | FeedbackFormPayload): void => {
     void sendContactMessage(config, payload).then((result) => {
       if (result.ok) {
         const message =
           payload.formType === "feedback" ? SUCCESS_MESSAGES.feedback : SUCCESS_MESSAGES.contact;
         setStatusMessage(status, message, "success");
+        if (payload.formType === "feedback") {
+          formRefs.feedback?.reset();
+        } else {
+          formRefs.contact?.reset();
+        }
         return;
       }
       setStatusMessage(status, result.userMessage, "error");
     });
   };
 
-  const feedbackForm = createFeedbackForm(config, submitHandler);
-  const contactForm = createContactForm(config, submitHandler);
-  feedbackPanel.appendChild(feedbackForm.root);
-  contactPanel.appendChild(contactForm.root);
+  formRefs.feedback = createFeedbackForm(config, submitHandler);
+  formRefs.contact = createContactForm(config, submitHandler);
+  feedbackPanel.appendChild(formRefs.feedback.root);
+  contactPanel.appendChild(formRefs.contact.root);
 }
 
 function buildModalStyles(config: WidgetConfig): string {

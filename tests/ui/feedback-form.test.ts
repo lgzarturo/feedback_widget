@@ -260,4 +260,25 @@ describe("BC-007 createFeedbackForm", () => {
 
     expect(counter.textContent).toBe("4/500");
   });
+
+  test("given_filled_form_when_reset_then_clears_fields_and_focuses_first_emoji", () => {
+    const form = mountForm();
+    const options = getEmojiOptions(form.root);
+    const textarea = getCommentTextarea(form.root);
+    const counter = getCharCounter(form.root);
+    const submit = getSubmitButton(form.root);
+
+    options[4]?.click();
+    textarea.value = "Todo excelente";
+    textarea.dispatchEvent(new Event("input", { bubbles: true }));
+
+    form.reset();
+
+    expect(form.getSelectedRating()).toBeNull();
+    expect(options.every((btn) => btn.getAttribute("aria-checked") === "false")).toBe(true);
+    expect(textarea.value).toBe("");
+    expect(counter.textContent).toBe("0/500");
+    expect(submit.disabled).toBe(true);
+    expect(document.activeElement).toBe(options[0]);
+  });
 });

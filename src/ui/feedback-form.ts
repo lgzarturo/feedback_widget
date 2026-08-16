@@ -15,6 +15,7 @@ export interface FeedbackFormController {
   getSelectedRating(): FeedbackRating | null;
   getPayload(): FeedbackFormPayload | null;
   submit(): boolean;
+  reset(): void;
 }
 
 interface EmojiOption {
@@ -226,6 +227,18 @@ export function createFeedbackForm(
     return true;
   }
 
+  function reset(): void {
+    selectedRating = null;
+    comment.value = "";
+    validationError.hidden = true;
+    updateCharCounter(charCounter, 0);
+    updateEmojiState();
+    const firstEmoji = emojiButtons[0];
+    if (firstEmoji) {
+      firstEmoji.focus();
+    }
+  }
+
   for (let i = 0; i < EMOJI_SCALE.length; i++) {
     const option = EMOJI_SCALE[i];
     if (!option) {
@@ -308,5 +321,6 @@ export function createFeedbackForm(
     getSelectedRating: () => selectedRating,
     getPayload: buildPayload,
     submit,
+    reset,
   };
 }
