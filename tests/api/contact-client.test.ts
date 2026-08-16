@@ -38,16 +38,22 @@ interface CapturedRequest {
 
 function mockFetch(
   status: number,
-  options: { ok?: boolean } = {},
+  options: { ok?: boolean; body?: unknown } = {},
 ): { fetchFn: typeof fetch; captured: CapturedRequest } {
   const captured: CapturedRequest = { url: "", init: {} };
   const fetchFn = (async (url: string | URL | Request, init?: RequestInit) => {
     captured.url = String(url);
     captured.init = init ?? {};
+    if (options.body !== undefined) {
+      return new Response(JSON.stringify(options.body), {
+        status,
+        statusText: String(status),
+        headers: { "Content-Type": "application/json" },
+      });
+    }
     return new Response(null, {
       status,
       statusText: String(status),
-      ...options,
     });
   }) as typeof fetch;
   return { fetchFn, captured };
@@ -61,8 +67,8 @@ describe("BC-010 buildContactMessageBody", () => {
       () => FIXED_NOW,
     );
 
-    expect(body.name).toBe("");
-    expect(body.email).toBe("");
+    expect(body.name).toBe("User Feedback");
+    expect(body.email).toBe("lgzarturo@gmail.com");
     expect(body.message).toBe("");
     expect(body.locale).toBe("es");
     expect(body.source).toBe("mi-sitio");
@@ -129,8 +135,8 @@ describe("BC-010 sendContactMessage", () => {
     });
 
     const body = JSON.parse(String(captured.init.body));
-    expect(body.name).toBe("");
-    expect(body.email).toBe("");
+    expect(body.name).toBe("User Feedback");
+    expect(body.email).toBe("lgzarturo@gmail.com");
     expect(body.message).toBe("Muy buena experiencia");
     expect(body.metadata).toEqual({
       formType: "feedback",
@@ -178,7 +184,7 @@ describe("BC-010 sendContactMessage", () => {
     });
   });
 
-  test("given_api_returns_400_when_send_then_user_message_validation_error", async () => {
+  test("given_api_returns_400_without_body_when_send_then_user_message_validation_error", async () => {
     const { fetchFn } = mockFetch(400);
 
     const result = await sendContactMessage(configWith(), contactPayload(), {
@@ -190,6 +196,69 @@ describe("BC-010 sendContactMessage", () => {
       ok: false,
       status: 400,
       userMessage: "Error de validación",
+    });
+  });
+
+  test("given_api_returns_400_with_error_message_when_send_then_extracts_error_message", async () => {
+    const zodMessage = JSON.stringify([
+      {
+        origin: "string",
+        code: "too_small",
+        minimum: 1,
+        inclusive: true,
+        path: ["name"],
+        message: "Too small: expected string to have >=1 characters",
+      },
+      {
+        origin: "string",
+        code: "invalid_format",
+        format: "email",
+        path: ["email"],
+        message: "Invalid email address",
+      },
+    ]);
+    const { fetchFn } = mockFetch(400, {
+      body: {
+        success: false,
+        error: {
+          name: "ZodError",
+          message: zodMessage,
+        },
+      },
+    });
+
+    const result = await sendContactMessage(configWith(), contactPayload(), {
+      fetchFn,
+      now: () => FIXED_NOW,
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      status: 400,
+      userMessage: "Too small: expected string to have >=1 characters. Invalid email address",
+    });
+  });
+
+  test("given_api_returns_400_with_plain_error_message_when_send_then_uses_error_message", async () => {
+    const { fetchFn } = mockFetch(400, {
+      body: {
+        success: false,
+        error: {
+          name: "ValidationError",
+          message: "El campo message es obligatorio",
+        },
+      },
+    });
+
+    const result = await sendContactMessage(configWith(), contactPayload(), {
+      fetchFn,
+      now: () => FIXED_NOW,
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      status: 400,
+      userMessage: "El campo message es obligatorio",
     });
   });
 

@@ -39,6 +39,9 @@ const ERROR_MESSAGES = {
   network: "No se pudo conectar con el servidor. Intenta de nuevo.",
 } as const;
 
+const FEEDBACK_DEFAULT_NAME = "User Feedback";
+const FEEDBACK_DEFAULT_EMAIL = "lgzarturo@gmail.com";
+
 function normalizeBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/$/, "");
 }
@@ -75,8 +78,8 @@ export function buildContactMessageBody(
   }
 
   return {
-    name: "",
-    email: "",
+    name: FEEDBACK_DEFAULT_NAME,
+    email: FEEDBACK_DEFAULT_EMAIL,
     message: payload.comment,
     locale: config.locale,
     source: config.source,
@@ -85,7 +88,49 @@ export function buildContactMessageBody(
   };
 }
 
-function mapErrorResult(status: number): ContactMessageResult {
+function formatApiErrorMessage(message: string): string {
+  try {
+    const parsed: unknown = JSON.parse(message);
+    if (Array.isArray(parsed)) {
+      const parts: string[] = [];
+      for (const item of parsed) {
+        if (
+          typeof item === "object" &&
+          item !== null &&
+          "message" in item &&
+          typeof (item as { message: unknown }).message === "string"
+        ) {
+          parts.push((item as { message: string }).message);
+        }
+      }
+      if (parts.length > 0) {
+        return parts.join(". ");
+      }
+    }
+  } catch {
+    // El mensaje no es JSON; se usa tal cual.
+  }
+  return message;
+}
+
+function extractErrorMessage(data: unknown): string | null {
+  if (typeof data !== "object" || data === null || !("error" in data)) {
+    return null;
+  }
+  const error = (data as { error: unknown }).error;
+  if (typeof error !== "object" || error === null || !("message" in error)) {
+    return null;
+  }
+  const message = (error as { message: unknown }).message;
+  if (typeof message !== "string" || message.trim() === "") {
+    return null;
+  }
+  return formatApiErrorMessage(message);
+}
+
+async function mapErrorResult(response: Response): Promise<ContactMessageResult> {
+  const status = response.status;
+
   if (status === 401) {
     return {
       ok: false,
@@ -93,13 +138,25 @@ function mapErrorResult(status: number): ContactMessageResult {
       userMessage: ERROR_MESSAGES.invalidApiKey,
     };
   }
+
   if (status === 400) {
+    let userMessage: string = ERROR_MESSAGES.validation;
+    try {
+      const data: unknown = await response.json();
+      const extracted = extractErrorMessage(data);
+      if (extracted !== null) {
+        userMessage = extracted;
+      }
+    } catch {
+      // Sin body parseable; se mantiene el mensaje genérico.
+    }
     return {
       ok: false,
       status,
-      userMessage: ERROR_MESSAGES.validation,
+      userMessage,
     };
   }
+
   if (status >= 500 && status <= 599) {
     return {
       ok: false,
@@ -107,6 +164,7 @@ function mapErrorResult(status: number): ContactMessageResult {
       userMessage: ERROR_MESSAGES.server,
     };
   }
+
   return {
     ok: false,
     status,
@@ -137,7 +195,7 @@ export async function sendContactMessage(
       return { ok: true };
     }
 
-    return mapErrorResult(response.status);
+    return mapErrorResult(response);
   } catch {
     return {
       ok: false,

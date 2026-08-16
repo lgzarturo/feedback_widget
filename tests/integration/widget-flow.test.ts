@@ -170,6 +170,8 @@ describe("BC-013 widget-flow", () => {
     expect(headers["x-api-key"]).toBe("test-integration-key");
 
     const body = JSON.parse(String(request?.init.body));
+    expect(body.name).toBe("User Feedback");
+    expect(body.email).toBe("lgzarturo@gmail.com");
     expect(body.message).toBe("Excelente integración");
     expect(body.locale).toBe("es");
     expect(body.source).toBe("integration-test");
