@@ -38,7 +38,7 @@ El widget lee la configuración automáticamente desde el elemento HTML host don
 
 ## Integración CDN (jsDelivr)
 
-El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/). El push de un tag `v*` construye `feedback.min.js`, lo publica en la rama `gh-pages` y crea el tag semver sin prefijo `v` (por ejemplo `1.0.2`) apuntando a esa rama. No requiere npm ni bundler en el sitio host.
+El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/). El push de un tag `v*` construye `feedback.min.js`, lo publica en la rama `gh-pages` y crea el tag semver sin prefijo `v` (por ejemplo `1.0.3`) apuntando a esa rama. No requiere npm ni bundler en el sitio host.
 
 > **Requisito:** el repositorio debe ser **público** para que jsDelivr indexe los archivos.
 
@@ -48,11 +48,11 @@ El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/)
 https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js
 ```
 
-Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.2`; jsDelivr resuelve al tag CDN `1.0.2` en `gh-pages`).
+Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.3`; jsDelivr resuelve al tag CDN `1.0.3` en `gh-pages`).
 
 | Versión | URL |
 | :--- | :--- |
-| Última estable (`v1.0.2`) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.2/dist/feedback.min.js` |
+| Última estable (`v1.0.3`) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.3/dist/feedback.min.js` |
 | `1.0.1` (publicada) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@1.0.1/dist/feedback.min.js` |
 
 Para actualizar, cambia solo el segmento `@vX.Y.Z` en la URL del script. Consulta [CHANGELOG.md](CHANGELOG.md) para el historial de versiones.
@@ -67,7 +67,7 @@ Para actualizar, cambia solo el segmento `@vX.Y.Z` en la URL del script. Consult
   data-position="bottom-right"
   data-locale="es">
 </div>
-<script defer src="https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.2/dist/feedback.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.3/dist/feedback.min.js"></script>
 ```
 
 El atributo `defer` garantiza carga diferida sin bloquear el parsing del HTML host.

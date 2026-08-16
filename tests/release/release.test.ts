@@ -133,17 +133,17 @@ describe("BC-014 jsdelivr release", () => {
     expect(changelog).toMatch(/v1\.0\.0/);
   });
 
-  test("given_package_and_docs_when_read_then_target_patch_version_is_1_0_2", () => {
+  test("given_package_and_docs_when_read_then_target_patch_version_is_1_0_3", () => {
     const pkg = JSON.parse(readFileSync(resolve(rootDir, "package.json"), "utf-8")) as {
       version: string;
     };
     const readme = readFileSync(readmePath, "utf-8");
     const changelog = readFileSync(changelogPath, "utf-8");
 
-    expect(pkg.version).toBe("1.0.2");
-    expect(readme).toMatch(/@v1\.0\.2\/dist\/feedback\.min\.js/);
-    expect(readme).toMatch(/Última estable \(`v1\.0\.2`\)/);
-    expect(changelog).toMatch(/## \[1\.0\.2\]/);
+    expect(pkg.version).toBe("1.0.3");
+    expect(readme).toMatch(/@v1\.0\.3\/dist\/feedback\.min\.js/);
+    expect(readme).toMatch(/Última estable \(`v1\.0\.3`\)/);
+    expect(changelog).toMatch(/## \[1\.0\.3\]/);
   });
 
   test("given_readme_when_read_then_documents_api_cors_allowlist", () => {
