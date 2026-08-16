@@ -6,6 +6,17 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-08-16
+
+### Correcciones / Bug Fixes 🐛
+
+- defaults API, errores Zod y reset tras éxito (`5654c6d`)
+
+### Otros Cambios
+
+- Merge pull request #4 from lgzarturo/cursor/fix-feedback-form-reset-f25d (`e774fd3`)
+
+
 ## [1.0.2] - 2026-08-16
 
 ### Corregido
