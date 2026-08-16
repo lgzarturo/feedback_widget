@@ -332,4 +332,78 @@ describe("BC-006 createFeedbackModal", () => {
 
     fetchMock.restore();
   });
+
+  test("given_feedback_submitted_when_api_returns_201_then_shows_success_status", async () => {
+    const fetchMock = mockGlobalFetch(201);
+    const modal = createFeedbackModal(configWith({ apiKey: "modal-test-key" }), {
+      withForms: true,
+    });
+    document.body.appendChild(modal.host);
+    modal.open();
+
+    const feedbackPanel = modal.host.shadowRoot?.querySelector("#fw-panel-feedback");
+    const emojiOptions = [...(feedbackPanel?.querySelectorAll(".fw-emoji-option") ?? [])].filter(
+      (el): el is HTMLButtonElement => el instanceof HTMLButtonElement,
+    );
+    emojiOptions[3]?.click();
+    const submitButton = feedbackPanel?.querySelector(".fw-submit");
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.click();
+    }
+
+    await flushMicrotasks();
+
+    const status = modal.host.shadowRoot?.querySelector(".fw-status");
+    expect(status).not.toBeNull();
+    expect(status?.getAttribute("role")).toBe("alert");
+    expect(status?.textContent).toBe("¡Gracias por tu feedback!");
+    expect((status as HTMLElement).hidden).toBe(false);
+
+    fetchMock.restore();
+  });
+
+  test("given_contact_submitted_when_fetch_throws_then_shows_network_error", async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = (async () => {
+      throw new TypeError("Failed to fetch");
+    }) as unknown as typeof fetch;
+
+    const modal = createFeedbackModal(configWith({ apiKey: "modal-test-key" }), {
+      withForms: true,
+    });
+    document.body.appendChild(modal.host);
+    modal.open();
+
+    const contactPanel = modal.host.shadowRoot?.querySelector("#fw-panel-contact");
+    const contactTab = modal.host.shadowRoot?.querySelectorAll('[role="tab"]')[1];
+    if (contactTab instanceof HTMLElement) {
+      contactTab.click();
+    }
+
+    const nameInput = contactPanel?.querySelector("#fw-contact-name");
+    const emailInput = contactPanel?.querySelector("#fw-contact-email");
+    const messageInput = contactPanel?.querySelector("#fw-contact-message");
+    const submitButton = contactPanel?.querySelector(".fw-submit");
+
+    if (nameInput instanceof HTMLInputElement) {
+      nameInput.value = "María";
+    }
+    if (emailInput instanceof HTMLInputElement) {
+      emailInput.value = "maria@example.com";
+    }
+    if (messageInput instanceof HTMLTextAreaElement) {
+      messageInput.value = "Consulta modal";
+    }
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.click();
+    }
+
+    await flushMicrotasks();
+
+    const status = modal.host.shadowRoot?.querySelector(".fw-status");
+    expect(status?.getAttribute("role")).toBe("alert");
+    expect(status?.textContent).toBe("No se pudo conectar con el servidor. Intenta de nuevo.");
+
+    globalThis.fetch = originalFetch;
+  });
 });

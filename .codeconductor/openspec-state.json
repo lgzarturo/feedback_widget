@@ -105,7 +105,8 @@
     "BC-011": "openspec/changes/bc-011-build-bundle-unico-feedback-min-js",
     "BC-012": "openspec/changes/bc-012-playground-de-pruebas",
     "BC-013": "openspec/changes/bc-013-suite-de-pruebas-unitarias-e-integracion",
-    "BC-014": "openspec/changes/bc-014-publicacion-jsdelivr-via-github-releases"
+    "BC-014": "openspec/changes/bc-014-publicacion-jsdelivr-via-github-releases",
+    "BC-015": "openspec/changes/bc-015-overlay-animacion-modal-y-errores-de-red-cors"
   },
   "itemSnapshots": {}
 }

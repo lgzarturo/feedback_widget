@@ -23,7 +23,22 @@ export interface FeedbackModal {
   isOpen(): boolean;
 }
 
-function mountForms(config: WidgetConfig, tabs: { panels: HTMLElement }): void {
+const SUCCESS_MESSAGES = {
+  feedback: "¡Gracias por tu feedback!",
+  contact: "Mensaje enviado",
+} as const;
+
+function setStatusMessage(status: HTMLElement, message: string, kind: "success" | "error"): void {
+  status.textContent = message;
+  status.hidden = false;
+  status.dataset.fwStatus = kind;
+}
+
+function mountForms(
+  config: WidgetConfig,
+  tabs: { panels: HTMLElement },
+  status: HTMLElement,
+): void {
   const feedbackPanel = tabs.panels.querySelector("#fw-panel-feedback");
   const contactPanel = tabs.panels.querySelector("#fw-panel-contact");
   if (!(feedbackPanel instanceof HTMLElement) || !(contactPanel instanceof HTMLElement)) {
@@ -31,7 +46,15 @@ function mountForms(config: WidgetConfig, tabs: { panels: HTMLElement }): void {
   }
 
   const submitHandler = (payload: ContactFormPayload | FeedbackFormPayload): void => {
-    void sendContactMessage(config, payload);
+    void sendContactMessage(config, payload).then((result) => {
+      if (result.ok) {
+        const message =
+          payload.formType === "feedback" ? SUCCESS_MESSAGES.feedback : SUCCESS_MESSAGES.contact;
+        setStatusMessage(status, message, "success");
+        return;
+      }
+      setStatusMessage(status, result.userMessage, "error");
+    });
   };
 
   const feedbackForm = createFeedbackForm(config, submitHandler);
@@ -61,8 +84,13 @@ function buildModalStyles(config: WidgetConfig): string {
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       width: min(400px, calc(100vw - 48px));
       max-height: calc(100vh - 48px);
-      overflow: auto;
+      overflow: hidden;
       padding: 16px;
+    }
+
+    .fw-tabs-panels {
+      overflow: auto;
+      max-height: calc(100vh - 120px);
     }
 
     .fw-modal-header {
@@ -109,6 +137,29 @@ function buildModalStyles(config: WidgetConfig): string {
     .fw-modal-close:focus-visible {
       outline: 2px solid ${config.primaryColor};
       outline-offset: 2px;
+    }
+
+    .fw-status {
+      margin-top: 12px;
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+
+    .fw-status[hidden] {
+      display: none;
+    }
+
+    .fw-status[data-fw-status="success"] {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      color: #166534;
+    }
+
+    .fw-status[data-fw-status="error"] {
+      background: #fef2f2;
+      border-left: 4px solid #ef4444;
+      color: #991b1b;
     }
   `.trim();
 }
@@ -162,8 +213,13 @@ export function createFeedbackModal(
 
   const tabs = createTabs(DEFAULT_MODAL_TABS);
 
+  const status = document.createElement("p");
+  status.className = "fw-status";
+  status.setAttribute("role", "alert");
+  status.hidden = true;
+
   if (options?.withForms) {
-    mountForms(config, tabs);
+    mountForms(config, tabs, status);
   }
 
   const closeButton = document.createElement("button");
@@ -177,6 +233,7 @@ export function createFeedbackModal(
 
   dialog.appendChild(header);
   dialog.appendChild(tabs.panels);
+  dialog.appendChild(status);
   overlay.appendChild(dialog);
   shadow.appendChild(overlay);
 

@@ -20,6 +20,9 @@ const CANVAS_CLASS = "fw-animation-canvas";
 
 const MODAL_ANIMATION_STYLES = `
   .fw-modal-dialog {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
     transition: transform ${MODAL_OPEN_MS}ms ease-out, opacity ${MODAL_OPEN_MS}ms ease-out;
   }
 
@@ -42,7 +45,8 @@ const MODAL_ANIMATION_STYLES = `
     z-index: 0;
   }
 
-  .fw-modal-dialog {
+  .fw-modal-header,
+  .fw-tabs-panels {
     position: relative;
     z-index: 1;
   }
@@ -87,9 +91,8 @@ function removeCanvas(dialog: HTMLElement): void {
   canvas?.remove();
 }
 
-function playCssOpen(dialog: HTMLElement): Promise<void> {
+function applyCssEnter(dialog: HTMLElement): void {
   ensureModalStyles(dialog);
-  setAnimationMode(dialog, "css");
   dialog.classList.remove(MODAL_EXIT_CLASS);
   dialog.style.transform = "scale(0.95)";
   dialog.style.opacity = "0";
@@ -99,7 +102,11 @@ function playCssOpen(dialog: HTMLElement): Promise<void> {
     dialog.style.transform = "scale(1)";
     dialog.style.opacity = "1";
   });
+}
 
+function playCssOpen(dialog: HTMLElement): Promise<void> {
+  setAnimationMode(dialog, "css");
+  applyCssEnter(dialog);
   return wait(MODAL_OPEN_MS);
 }
 
@@ -144,7 +151,7 @@ function createThreeScene(dialog: HTMLElement): ThreeSceneState | null {
     const mesh = new Mesh(geometry, material);
     scene.add(mesh);
 
-    let rafId: number | null = null;
+    const state: ThreeSceneState = { renderer, rafId: null, canvas };
     const start = performance.now();
 
     const animate = (now: number): void => {
@@ -152,14 +159,12 @@ function createThreeScene(dialog: HTMLElement): ThreeSceneState | null {
       mesh.rotation.x = elapsed * 1.5;
       mesh.rotation.y = elapsed * 2;
       renderer.render(scene, camera);
-      if (elapsed < MODAL_OPEN_MS / 1000) {
-        rafId = requestAnimationFrame(animate);
-      }
+      state.rafId = requestAnimationFrame(animate);
     };
 
-    rafId = requestAnimationFrame(animate);
+    state.rafId = requestAnimationFrame(animate);
 
-    return { renderer, rafId, canvas };
+    return state;
   } catch {
     removeCanvas(dialog);
     return null;
@@ -197,11 +202,12 @@ export function createModalAnimationController(
     threeState = null;
 
     if (isWebGLAvailable()) {
+      ensureModalStyles(dialog);
       threeState = createThreeScene(dialog);
       if (threeState) {
         useThreeJs = true;
         setAnimationMode(dialog, "threejs");
-        dialog.classList.add(MODAL_ENTER_CLASS);
+        applyCssEnter(dialog);
         await wait(MODAL_OPEN_MS);
         return;
       }
