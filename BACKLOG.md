@@ -23,6 +23,53 @@ Maquina de estados: TODO -> READY -> PLANNED -> IN_PROGRESS -> REVIEW -> DONE ->
 
 ## Archive
 
+### BC-015 | Overlay de animacion modal y errores de red CORS
+
+- Priority: P0
+- Status: DONE
+- Type: bug
+- Owner: implementer
+- Depends on: BC-009, BC-010
+- Description: Corregir la composicion del canvas Three.js en el modal (overlay absoluto, RAF continuo, entrada CSS) y capturar fallos de fetch por red/CORS mostrando el mensaje al usuario. Preparar documentacion y version 1.0.2.
+- Scope: src/animations/modal-scene.ts, src/ui/modal.ts, src/api/contact-client.ts, tests/animations/, tests/api/, tests/ui/modal.test.ts, README.md, CHANGELOG.md, package.json
+- Out of scope: cambiar CORS en api.appsutiles.dev, publicar el tag v1.0.2, redesplegar el blog Astro
+- Business value: el widget embebido deja de romper el layout del modal y comunica fallos de red en lugar de fallar en silencio
+- Acceptance:
+  - [x] Path Three.js inyecta estilos de overlay en Shadow DOM
+  - [x] Canvas no altera la altura del dialog y aplica entrada CSS
+  - [x] RAF continua despues de MODAL_OPEN_MS hasta playClose/dispose
+  - [x] sendContactMessage captura TypeError de fetch y devuelve status 0 con mensaje de red
+  - [x] Modal muestra alerta de exito o error tras el envio
+  - [x] README documenta allowlist CORS y URL CDN v1.0.2
+- Risks: CORS real sigue bloqueado hasta actualizar la API; el blog debe apuntar a 1.0.2 tras el release
+- Progress: 100%
+- Reviewer: reviewer
+- Last update: 2026-08-16
+
+#### Scorecard BC-015
+
+Flujo de fases para este item (TDD + Spec-Driven). Umbral minimo de aprobacion: 85 por ciento.
+Un criterio con peso mayor o igual a 10 por ciento no cumplido bloquea el avance a la fase siguiente.
+
+| Fase      | Criterio                                                                        | Peso  | Estado      |
+|-----------|---------------------------------------------------------------------------------|-------|-------------|
+| discover  | Causa del canvas en flujo y del TypeError CORS identificadas                    | 10 %  | completado  |
+| discover  | Version objetivo 1.0.2 (1.0.1 ya publicada) documentada                         | 5 %   | completado  |
+| design    | Overlay RAF, catch de red y status minimo definidos antes de implementar        | 15 %  | completado  |
+| design    | Allowlist CORS de la API documentada como fuera de este repo                    | 10 %  | completado  |
+| design    | Plan aprobado antes de GREEN                                                    | 5 %   | completado  |
+| test      | Tests de overlay y RAF escritos en rojo                                         | 15 %  | completado  |
+| test      | Tests de fetch throw y status de modal escritos en rojo                         | 10 %  | completado  |
+| test      | Cada acceptance criterion tiene al menos un test nombrado                       | 10 %  | completado  |
+| implement | Overlay, RAF, catch de red y alerta de status implementados                     | 10 %  | completado  |
+| implement | package.json, README y CHANGELOG apuntan a 1.0.2                                | 10 %  | completado  |
+| review    | Cero findings CRITICAL en Review Report                                         | 10 %  | completado  |
+| review    | npx cc-codeconductor openspec validate pasa sin errores                         | 5 %   | completado  |
+
+OpenSpec folder: openspec/changes/bc-015-overlay-animacion-modal-y-errores-de-red-cors/
+
+---
+
 ### BC-014 | Publicacion jsDelivr via GitHub Releases
 
 - Priority: P2

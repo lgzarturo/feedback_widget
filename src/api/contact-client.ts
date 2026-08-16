@@ -36,6 +36,7 @@ const ERROR_MESSAGES = {
   invalidApiKey: "API key inválida",
   validation: "Error de validación",
   server: "Error del servidor. Intenta de nuevo.",
+  network: "No se pudo conectar con el servidor. Intenta de nuevo.",
 } as const;
 
 function normalizeBaseUrl(baseUrl: string): string {
@@ -122,18 +123,26 @@ export async function sendContactMessage(
   const body = buildContactMessageBody(config, payload, deps.now);
   const url = `${normalizeBaseUrl(config.baseUrl)}/v1/contact/messages`;
 
-  const response = await fetchFn(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": config.apiKey,
-    },
-    body: JSON.stringify(body),
-  });
+  try {
+    const response = await fetchFn(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": config.apiKey,
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (response.status === 201) {
-    return { ok: true };
+    if (response.status === 201) {
+      return { ok: true };
+    }
+
+    return mapErrorResult(response.status);
+  } catch {
+    return {
+      ok: false,
+      status: 0,
+      userMessage: ERROR_MESSAGES.network,
+    };
   }
-
-  return mapErrorResult(response.status);
 }

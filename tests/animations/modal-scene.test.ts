@@ -194,3 +194,82 @@ describe("BC-009 createModalAnimationController", () => {
     expect(resolveAnimationBackend(configWith({ animation: "on" }))).toBe("threejs");
   });
 });
+
+describe("BC-015 createModalAnimationController overlay", () => {
+  let originalRaf: typeof window.requestAnimationFrame;
+
+  beforeEach(() => {
+    document.body.innerHTML = "";
+    originalRaf = window.requestAnimationFrame;
+  });
+
+  afterEach(() => {
+    window.requestAnimationFrame = originalRaf;
+    restoreGetContext();
+    document.body.innerHTML = "";
+  });
+
+  test("given_webgl_available_when_playOpen_then_injects_overlay_styles_in_shadow_root", async () => {
+    mockWebGLAvailable();
+    const dialog = createDialogInShadowRoot();
+    const shadow = dialog.getRootNode() as ShadowRoot;
+    const controller = createModalAnimationController(configWith({ animation: "on" }), dialog);
+
+    await controller.playOpen();
+
+    const style = shadow.querySelector("style[data-fw-modal-animation-styles]");
+    expect(style).not.toBeNull();
+    expect(style?.textContent).toContain(".fw-animation-canvas");
+    expect(style?.textContent).toMatch(/position:\s*absolute/);
+    expect(style?.textContent).toContain(".fw-modal-header");
+    expect(style?.textContent).toContain(".fw-tabs-panels");
+    expect(style?.textContent).toMatch(/z-index:\s*1/);
+
+    controller.dispose();
+  });
+
+  test("given_webgl_available_when_playOpen_then_applies_css_enter_without_growing_dialog", async () => {
+    mockWebGLAvailable();
+    const dialog = createDialog();
+    const filler = document.createElement("div");
+    filler.textContent = "contenido";
+    dialog.appendChild(filler);
+    const heightBefore = dialog.getBoundingClientRect().height;
+
+    const controller = createModalAnimationController(configWith({ animation: "on" }), dialog);
+    await controller.playOpen();
+
+    const canvas = dialog.querySelector(".fw-animation-canvas");
+    expect(canvas).not.toBeNull();
+    expect(dialog.classList.contains("fw-modal-enter")).toBe(true);
+    expect(dialog.style.opacity).toBe("1");
+    expect(dialog.style.transform).toBe("scale(1)");
+    expect(dialog.getBoundingClientRect().height).toBe(heightBefore);
+
+    controller.dispose();
+  });
+
+  test("given_threejs_open_when_waiting_past_open_ms_then_raf_keeps_scheduling", async () => {
+    mockWebGLAvailable();
+    let rafCount = 0;
+    window.requestAnimationFrame = (cb: FrameRequestCallback) => {
+      rafCount += 1;
+      return originalRaf.call(window, cb);
+    };
+
+    const dialog = createDialog();
+    const controller = createModalAnimationController(configWith({ animation: "on" }), dialog);
+
+    await controller.playOpen();
+    const countAtOpenEnd = rafCount;
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 80);
+    });
+
+    expect(rafCount).toBeGreaterThan(countAtOpenEnd);
+
+    await controller.playClose();
+    controller.dispose();
+  });
+});

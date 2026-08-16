@@ -222,4 +222,21 @@ describe("BC-010 sendContactMessage", () => {
       userMessage: "Error del servidor. Intenta de nuevo.",
     });
   });
+
+  test("given_fetch_throws_when_send_then_returns_network_error_result", async () => {
+    const fetchFn = (async () => {
+      throw new TypeError("Failed to fetch");
+    }) as unknown as typeof fetch;
+
+    const result = await sendContactMessage(configWith(), contactPayload(), {
+      fetchFn,
+      now: () => FIXED_NOW,
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      status: 0,
+      userMessage: "No se pudo conectar con el servidor. Intenta de nuevo.",
+    });
+  });
 });

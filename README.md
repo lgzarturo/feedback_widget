@@ -38,7 +38,7 @@ El widget lee la configuración automáticamente desde el elemento HTML host don
 
 ## Integración CDN (jsDelivr)
 
-El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/). El push de un tag `v*` construye `feedback.min.js`, lo publica en la rama `gh-pages` y crea el tag semver sin prefijo `v` (por ejemplo `1.0.0`) apuntando a esa rama. No requiere npm ni bundler en el sitio host.
+El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/). El push de un tag `v*` construye `feedback.min.js`, lo publica en la rama `gh-pages` y crea el tag semver sin prefijo `v` (por ejemplo `1.0.2`) apuntando a esa rama. No requiere npm ni bundler en el sitio host.
 
 > **Requisito:** el repositorio debe ser **público** para que jsDelivr indexe los archivos.
 
@@ -48,11 +48,12 @@ El widget se distribuye gratuitamente vía [jsDelivr](https://www.jsdelivr.com/)
 https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@VERSION/dist/feedback.min.js
 ```
 
-Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.0`; jsDelivr resuelve al tag CDN `1.0.0` en `gh-pages`).
+Reemplaza `VERSION` por el tag semver deseado (por ejemplo `v1.0.2`; jsDelivr resuelve al tag CDN `1.0.2` en `gh-pages`).
 
 | Versión | URL |
 | :--- | :--- |
-| Última estable (`v1.0.0`) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.0/dist/feedback.min.js` |
+| Última estable (`v1.0.2`) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.2/dist/feedback.min.js` |
+| `1.0.1` (publicada) | `https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@1.0.1/dist/feedback.min.js` |
 
 Para actualizar, cambia solo el segmento `@vX.Y.Z` en la URL del script. Consulta [CHANGELOG.md](CHANGELOG.md) para el historial de versiones.
 
@@ -66,7 +67,7 @@ Para actualizar, cambia solo el segmento `@vX.Y.Z` en la URL del script. Consult
   data-position="bottom-right"
   data-locale="es">
 </div>
-<script defer src="https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.0/dist/feedback.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/lgzarturo/feedback_widget@v1.0.2/dist/feedback.min.js"></script>
 ```
 
 El atributo `defer` garantiza carga diferida sin bloquear el parsing del HTML host.
@@ -81,6 +82,32 @@ Para confirmar que la URL CDN funciona antes de integrar en producción:
 4. Restaura el `src` local (`/dist/feedback.min.js`) cuando termines.
 
 > **Nota:** jsDelivr puede tardar unos minutos en cachear un tag recién publicado.
+
+---
+
+## CORS en api.appsutiles.dev
+
+El widget envía `POST {baseUrl}/v1/contact/messages` con `Content-Type: application/json` y el header `x-api-key`. Eso dispara un preflight `OPTIONS`. El navegador **bloquea** la petición si la API no responde con cabeceras CORS para el origin del sitio host.
+
+El widget no puede permitir orígenes por sí mismo. Hay que configurar `https://api.appsutiles.dev` con:
+
+- `Access-Control-Allow-Origin: <origin de la allowlist>` (eco del header `Origin`; no usar `*` con headers custom)
+- `Access-Control-Allow-Methods: POST, OPTIONS`
+- `Access-Control-Allow-Headers: Content-Type, x-api-key`
+- Respuesta `204` al preflight `OPTIONS`
+
+Orígenes previstos:
+
+- `https://arthurolg.com`
+- `https://lgzarturo.com`
+- `https://mailmindworks.com`
+- `https://compraenlineaya.com`
+- `https://visitapormexico.com`
+- `https://miraeljuego.com`
+- `https://joobslot.com`
+- `http://localhost:4321` (desarrollo del blog Astro)
+
+Si CORS falla, el widget muestra: "No se pudo conectar con el servidor. Intenta de nuevo."
 
 ---
 
